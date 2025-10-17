@@ -16,16 +16,16 @@ amphi_list_files <- function(
 ### 1st double check
 	if (!dir.exists(home_folder)) {
     
-		stop("Error: 'home_folder' no es un directori vàlid o no existeix. Si us plau, verifica la ruta.")
+		stop("Error: 'home_folder' no es un directori valid o no existeix. Si us plau, verifica la ruta.")
   
 	}
 
 ### 2nd double check
 	valid_patterns <- c('xlsx', 'xls', 'csv')
 
-	if (!any(pattern %in% valid_patterns)) {
+	if (!all(pattern %in% valid_patterns)) {
     
-		warning("Advertència: el 'pattern' especificat no és l'extensió dels arxius. Si us plau, assegura que siguin correctes.")
+		warning("Advertencia: el 'pattern' especificat no es l'extensio dels arxius. Si us plau, assegura que siguin correctes.")
   
 	}
 
@@ -118,8 +118,8 @@ amphi_read_data <- function(
 			### Obtenint info sobre totes les fulles i arxius 'excel'
   			l_sheet <- readxl::excel_sheets(l_files[[i]])
 
-				df <- lapply(l_sheet,
-					function(x) readxl::read_excel(l_files[[i]], sheet = x, skip = skip))
+				df <- lapply(l_sheet, 
+					function(x) readxl::read_excel(l_files[[i]], sheet = x, skip = skip_rows))
 
   		### Assigna noms a les matrius
   			names(df) <- l_sheet

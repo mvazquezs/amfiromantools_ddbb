@@ -27,12 +27,15 @@
 #' @import tibble
 #' @import rlang
 #' @importFrom magrittr %>%
+#' @importFrom stats setNames
+#' @importFrom purrr map
+#' @importFrom tidyr pivot_longer
+#' @importFrom crayon bold blue
 #'
-#' @seealso \code{\link{dplyr::mutate}}
-#' @seealso \code{\link{dplyr::arrange}}
-#' @seealso \code{\link{tibble::tibble}}
-#' @seealso \code{\link{rlang::enquo}}
-#'
+#' @seealso \code{\link[dplyr]{mutate}}, \code{\link[dplyr]{arrange}}
+#' @seealso \code{\link[tibble]{tibble}}
+#' @seealso \code{\link[rlang]{enquo}}
+
 #' @examples
 #' \dontrun{
 #' # Carregar i fusionar tots els dataframes
@@ -65,10 +68,10 @@ load_dimensions_vazquez <- function(
 {
 
 ### Double Check 01
-  if(!is.null(filtrar_provincia) && !is.null(filtrar_pais)) {
+  if (!is.null(filtrar_provincia) && !is.null(filtrar_pais)) {
   
     warning(
-      "S'han proporcionat filtres per província i país. Ambdues combinacions són incompatibles.")
+      "S'han proporcionat filtres per provincia i pais. Ambdues combinacions son incompatibles.")
   
   }
 
@@ -78,12 +81,15 @@ load_dimensions_vazquez <- function(
   filtrar_pais_quo <- rlang::enquo(filtrar_pais)
 
 ### Carrega de fitxers
-  l_fitxers <- amphi_list_files(
-	  home_folder = 'data/02_data_vazquez',
-    recursive = TRUE,
-    pattern = 'csv')[[1]][-1]
-  l_fitxers <- list.files(path = 'data/02_data_vazquez', recursive = TRUE, pattern = 'csv', full.names = TRUE)
-  l_data_vazquez <- lapply(l_fitxers, utils::read.csv2, dec = '.', na.strings = "NA")
+### Obtenir el camí al directori de dades dins del paquet instal·lat
+  data_path <- system.file("extdata", "02_data_vazquez", package = "amphidata")
+  
+### Comprovar si el directori existeix
+  if (data_path == "") {
+    stop("El directori de dades 'inst/extdata/02_data_vazquez' no s'ha trobat. Assegura't que el paquet esta instal\u00b7lat correctament.")
+  }
+  
+  l_fitxers <- list.files(path = data_path, recursive = TRUE, pattern = 'csv', full.names = TRUE)
 
 ### Carrega de dades
   l_data_vazquez <- amphi_read_data(
@@ -96,9 +102,10 @@ load_dimensions_vazquez <- function(
     clean_names = TRUE)
 
 ### Assignar noms de cada fitxer
+  # Extreu el nom del fitxer per utilitzar-lo com a nom a la llista
   names(l_data_vazquez) <- stringr::str_sub(
     l_fitxers, 
-    start = 37, 
+    start = nchar(data_path) + 2, # +2 per la barra '/' i el primer caràcter
     end = -5)
     
   columnes_golvin <- c(
@@ -111,7 +118,7 @@ load_dimensions_vazquez <- function(
     'arena_max', 'arena_min', 'overall_max', 'overall_min',
     'seat_est', 'cavea_wide')
 
-  columnes <- setNames(columnes_vazquez, columnes_golvin)
+  columnes <- stats::setNames(columnes_vazquez, columnes_golvin)
 
 ### Definir aquelles columnes númeriques
 
@@ -134,17 +141,17 @@ load_dimensions_vazquez <- function(
   for(i in seq_along(l_data_vazquez)) {
 
     l_data_vazquez[[i]] <- l_data_vazquez[[i]] %>%
-      dplyr::rename(!!!columnes, pais = mod_country) %>%
+      dplyr::rename(!!!columnes, pais = .data$mod_country) %>%
       dplyr::mutate(
         provincia_romana = names(l_data_vazquez)[[i]],
-        ratio_arena = amplada_arena / alcada_arena,
-        ratio_general = amplada_general / alcada_general,
-        superficie_arena = (amplada_arena / 2) * (alcada_arena / 2) * pi,
-        superficie_general = (amplada_general / 2) * (alcada_general / 2) * pi,
-        superficie_cavea = superficie_general - superficie_arena,
-        perimetre_arena = pi * (amplada_arena / 2 + alcada_arena / 2),
-        perimetre_general = pi * (amplada_general / 2 + alcada_general / 2),
-        ratio_cavea = superficie_arena / superficie_general) %>%
+        ratio_arena = .data$amplada_arena / .data$alcada_arena,
+        ratio_general = .data$amplada_general / .data$alcada_general,
+        superficie_arena = (.data$amplada_arena / 2) * (.data$alcada_arena / 2) * pi,
+        superficie_general = (.data$amplada_general / 2) * (.data$alcada_general / 2) * pi,
+        superficie_cavea = .data$superficie_general - .data$superficie_arena,
+        perimetre_arena = pi * (.data$amplada_arena / 2 + .data$alcada_arena / 2),
+        perimetre_general = pi * (.data$amplada_general / 2 + .data$alcada_general / 2),
+        ratio_cavea = .data$superficie_arena / .data$superficie_general) %>%
       dplyr::mutate(
         across(any_of(cols_num), as.double)) %>%
       dplyr::mutate(
@@ -154,7 +161,7 @@ load_dimensions_vazquez <- function(
     if (!is.null(filtrar_edifici)) {
       
       l_data_vazquez[[i]] <- l_data_vazquez[[i]] %>%
-        dplyr::filter(t_building %in% filtrar_edifici) %>%
+        dplyr::filter(.data$t_building %in% filtrar_edifici) %>%
         droplevels()
     }
 
@@ -166,7 +173,7 @@ load_dimensions_vazquez <- function(
       if (is.character(rlang::quo_get_expr(filter_expr))) {
         
         pattern <- paste(filtrar_provincia, collapse = '|')
-        filter_expr <- rlang::quo(stringr::str_detect(provincia_romana, !!pattern))
+        filter_expr <- rlang::quo(stringr::str_detect(.data$provincia_romana, !!pattern))
       
       }
       
@@ -184,7 +191,7 @@ load_dimensions_vazquez <- function(
       if (is.character(rlang::quo_get_expr(filter_expr))) {
         
         pattern <- paste(filtrar_pais, collapse = '|')
-        filter_expr <- rlang::quo(stringr::str_detect(pais, !!pattern))
+        filter_expr <- rlang::quo(stringr::str_detect(.data$pais, !!pattern))
       
       }
       
@@ -198,7 +205,7 @@ load_dimensions_vazquez <- function(
     if (!rlang::quo_is_null(seleccionar_columnes)) {
       
       l_data_vazquez[[i]] <- l_data_vazquez[[i]] %>%
-        dplyr::select(index_id, nom, t_building, provincia_romana, pais, !!seleccionar_columnes)
+        dplyr::select(.data$index_id, .data$nom, .data$t_building, .data$provincia_romana, .data$pais, !!seleccionar_columnes)
     
     }
   }
@@ -241,7 +248,7 @@ load_dimensions_vazquez <- function(
 ### 'bind_rows' de la llista
   df_data_vazquez <- data.table::rbindlist(l_data_vazquez) %>%
     tibble::as_tibble() %>%
-    dplyr::arrange(index_id, nom, provincia_romana, pais)
+    dplyr::arrange(.data$index_id, .data$nom, .data$provincia_romana, .data$pais)
 
   if (retornar_originals) {
 
@@ -257,7 +264,7 @@ load_dimensions_vazquez <- function(
     # missatge
     cat(
       crayon::bold(crayon::blue('i')),
-      crayon::black(' Les dades ha estat carregat correctament\n'))
+      crayon::black(' Les dades han estat carregades correctament\n'))
     
     return(df_data_vazquez)
   

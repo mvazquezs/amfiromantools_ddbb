@@ -57,7 +57,7 @@ df_llarg <- load_dimensions_golvin(
 
 }
 \seealso{
-\code{\link{dplyr::mutate}}
+\code{\link[dplyr]{mutate}}
 
-\code{\link{tidyr::pivot_longer}}
+\code{\link[tidyr]{pivot_longer}}
 }

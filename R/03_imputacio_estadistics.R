@@ -11,12 +11,15 @@
 #' @param metode_imputacio Mètode d'imputació: 'aritmetica', 'truncada', 'geometrica', 'winsoritzada', 'mediana'.
 #' @param valor_trim Valor de trim per a les mitjanes 'truncada' i 'winsoritzada'.
 #' @param report_imputacio Retorna un report de la imputació? (default: TRUE).
-#' @param retorna_original Retorna el data frame original juntament amb l'imputat? (default: FALSE).
+#' @param retornar_original Retorna el data frame original juntament amb l'imputat? (default: FALSE).
 #'
 #' @return Una llista que conté:
 #'   - `imputed_df`: El data frame amb els valors imputats.
 #'   - `original_df`: (Opcional) El data frame original.
 #'   - `report`: (Opcional) Un tibble amb l'informe d'imputació.
+#' @importFrom psych geometric.mean winsor.mean
+#' @importFrom tidyr replace_na pivot_longer
+#' @importFrom purrr map_df
 #' @export
 #'
 #' @examples
@@ -42,8 +45,8 @@
 imputacio_estadistics <- function(
   df,
   seleccio_variables,
-  grup_by = NULL,
-  grup_by_reserva = NULL,
+  grup_by,
+  grup_by_reserva,
   metode_imputacio = c('aritmetica', 'truncada', 'geometrica', 'winsoritzada', 'mediana'),
   valor_trim = 0.1,
   report_imputacio = TRUE,
@@ -182,41 +185,41 @@ imputacio_estadistics <- function(
     # Calcular valors imputats i reanomenar columnes
     report <- report %>%
       dplyr::mutate(
-        n_imp_grup = if ('na_post_grup' %in% names(.)) n_na_ori - na_post_grup else 0,
-        n_imp_reserva = if (all(c('na_post_grup', 'na_post_reserva') %in% names(.))) na_post_grup - na_post_reserva else 0
+        n_imp_grup = if ('na_post_grup' %in% names(.)) .data$n_na_ori - .data$na_post_grup else 0,
+        n_imp_reserva = if (all(c('na_post_grup', 'na_post_reserva') %in% names(.))) .data$na_post_grup - .data$na_post_reserva else 0
       )
 
     # Calcular fila de totals
     report_totals <- report %>%
       dplyr::summarise(
         variable = 'Total',
-        n_na_ori = sum(n_na_ori, na.rm = TRUE),
-        n_imp_grup = sum(n_imp_grup, na.rm = TRUE),
-        n_imp_reserva = sum(n_imp_reserva, na.rm = TRUE),
-        n_na_finals = sum(n_na_finals, na.rm = TRUE))
+        n_na_ori = sum(.data$n_na_ori, na.rm = TRUE),
+        n_imp_grup = sum(.data$n_imp_grup, na.rm = TRUE),
+        n_imp_reserva = sum(.data$n_imp_reserva, na.rm = TRUE),
+        n_na_finals = sum(.data$n_na_finals, na.rm = TRUE))
 
     # Unir report i totals i seleccionar columnes finals
     report <- dplyr::bind_rows(report, report_totals) %>%
       dplyr::select(
-        variable, 
-        n_na_ori, n_imp_grup, n_imp_reserva, n_na_finals) %>%
-      dplyr::filter(!str_detect(variable, pattern = 'flag_'))
+        .data$variable, 
+        .data$n_na_ori, .data$n_imp_grup, .data$n_imp_reserva, .data$n_na_finals) %>%
+      dplyr::filter(!stringr::str_detect(.data$variable, pattern = 'flag_'))
   
   }
 
 ### Sortida
-  # Reorder rows to match original and select columns
+  # Reordenar files per coincidir amb l'original i seleccionar columnes
   original_cols <- names(df_original)
   flag_cols <- names(df_out) %>% stringr::str_subset("^flag_")
 
   df_out <- df_out %>%
-    dplyr::arrange(.row_id) %>%
+    dplyr::arrange(.data$.row_id) %>%
     dplyr::select(all_of(original_cols), all_of(flag_cols))
 
-  result <- list(imputed_df = df_out)
+  result <- list(df_imputat = df_out)
   
   if (isTRUE(retornar_original)) {
-    result$original_df <- df_original
+    result$df_original <- df_original
 
   }
   

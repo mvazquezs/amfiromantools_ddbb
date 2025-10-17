@@ -23,5 +23,5 @@ Aquesta funció utilitza el paquet 'pacman' per comprovar, instal·lar (si cal) 
 # amphi_load_packages(update_packages = TRUE)
 }
 \seealso{
-\code{\link{pacman::p_load}}
+\code{\link[pacman]{p_load}}
 }

@@ -21,9 +21,11 @@
 #' @import tibble
 #' @import rlang
 #' @importFrom magrittr %>%
-#' 
-#' @seealso \code{\link{dplyr::mutate}}
-#' @seealso \code{\link{tidyr::pivot_longer}}
+#' @importFrom purrr map
+#' @importFrom tidyr pivot_longer
+#' @importFrom crayon bold blue
+#' @seealso \code{\link[dplyr]{mutate}}
+#' @seealso \code{\link[tidyr]{pivot_longer}}
 #' 
 #' @examples
 #' # Carregar totes les dades
@@ -598,14 +600,14 @@ load_dimensions_golvin <- function(
     
     l_tableau[[i]] <- l_tableau[[i]] %>%
       dplyr::mutate(
-        ratio_arena = amplada_arena / alcada_arena,
-        ratio_general = amplada_general / alcada_general,
-        superficie_arena = amplada_arena / 2 * alcada_arena / 2 * pi,
-        superficie_general = amplada_general / 2 * alcada_general / 2 * pi,
-        superficie_cavea = superficie_general - superficie_arena,
-        perimetre_arena = pi * (amplada_arena / 2 + alcada_arena / 2),
-        perimetre_general = pi * (amplada_general / 2 + alcada_general / 2),
-        ratio_cavea = superficie_arena / superficie_general,
+        ratio_arena = .data$amplada_arena / .data$alcada_arena,
+        ratio_general = .data$amplada_general / .data$alcada_general,
+        superficie_arena = .data$amplada_arena / 2 * .data$alcada_arena / 2 * pi,
+        superficie_general = .data$amplada_general / 2 * .data$alcada_general / 2 * pi,
+        superficie_cavea = .data$superficie_general - .data$superficie_arena,
+        perimetre_arena = pi * (.data$amplada_arena / 2 + .data$alcada_arena / 2),
+        perimetre_general = pi * (.data$amplada_general / 2 + .data$alcada_general / 2),
+        ratio_cavea = .data$superficie_arena / .data$superficie_general,
         bib = '1988_golvin') %>%
       dplyr::mutate(
         across(any_of(cols_num), as.double)) %>%  
@@ -617,7 +619,7 @@ load_dimensions_golvin <- function(
 
         l_tableau[[i]] <- l_tableau[[i]] %>%
           dplyr::filter(
-            stringr::str_detect(provincia_romana, paste(filtrar_provincia, collapse = '|'))) %>%
+            stringr::str_detect(.data$provincia_romana, paste(filtrar_provincia, collapse = '|'))) %>%
             droplevels()
   
       }
@@ -627,7 +629,7 @@ load_dimensions_golvin <- function(
 
         l_tableau[[i]] <- l_tableau[[i]] %>%
           dplyr::filter(
-            stringr::str_detect(pais, paste(pais, collapse = '|'))) %>%
+            stringr::str_detect(.data$pais, paste(filtrar_pais, collapse = '|'))) %>%
             droplevels()
   
       }
@@ -636,7 +638,7 @@ load_dimensions_golvin <- function(
         if(!rlang::quo_is_null(seleccionar_columnes)) {
 
           l_tableau[[i]] <- l_tableau[[i]] %>%
-            dplyr::select('index_id', 'nom', 'provincia_romana', 'pais', !!seleccionar_columnes)
+            dplyr::select(.data$index_id, .data$nom, .data$provincia_romana, .data$pais, !!seleccionar_columnes)
 
         }
     }
@@ -676,7 +678,7 @@ load_dimensions_golvin <- function(
 
 ### Fusió de les dues taules per la columna 'nom' i 'original_id'
   taula_fusionada <- dplyr::bind_rows(l_tableau) %>%
-    dplyr::arrange('index_id', 'nom',  'provincia_romana', 'pais')
+    dplyr::arrange(.data$index_id, .data$nom,  .data$provincia_romana, .data$pais)
 
 
   if (isTRUE(retornar_originals)) {
@@ -693,7 +695,7 @@ load_dimensions_golvin <- function(
     # missatge
     cat(
       crayon::bold(crayon::blue('i')),
-      crayon::black(' Les dades ha estat carregat correctament\n'))
+      crayon::black(' Les dades han estat carregades correctament\n'))
 
     return(taula_fusionada)
     

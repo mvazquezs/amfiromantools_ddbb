@@ -33,7 +33,9 @@ amphi_setup_dirs <- function(base_path = getwd(), dirs_to_create = c("data", "R"
 #' @param update_packages Lògic. Si és `TRUE`, intenta actualitzar tots els paquets a la seva darrera versió. Per defecte és `FALSE`.
 #' @return No retorna cap valor, però carrega els paquets a l'entorn global.
 #' @import pacman
-#' @seealso \code{\link{pacman::p_load}}
+#' @importFrom utils install.packages
+#' @importFrom crayon bold blue
+#' @seealso \code{\link[pacman]{p_load}}
 #' @export
 #' @examples
 #' # Carregar tots els paquets necessaris
@@ -46,7 +48,7 @@ amphi_load_packages <- function(update_packages = FALSE) {
   # Assegura que 'pacman' estigui instal·lat i carregat
   if (!requireNamespace('pacman', quietly = TRUE)) {
   
-    install.packages('pacman')
+    utils::install.packages('pacman')
   
   }
 

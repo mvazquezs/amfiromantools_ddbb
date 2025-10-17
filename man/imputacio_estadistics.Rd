@@ -7,8 +7,8 @@
 imputacio_estadistics(
   df,
   seleccio_variables,
-  grup_by = NULL,
-  grup_by_reserva = NULL,
+  grup_by,
+  grup_by_reserva,
   metode_imputacio = c("aritmetica", "truncada", "geometrica", "winsoritzada", "mediana"),
   valor_trim = 0.1,
   report_imputacio = TRUE,
@@ -30,7 +30,7 @@ imputacio_estadistics(
 
 \item{report_imputacio}{Retorna un report de la imputació? (default: TRUE).}
 
-\item{retorna_original}{Retorna el data frame original juntament amb l'imputat? (default: FALSE).}
+\item{retornar_original}{Retorna el data frame original juntament amb l'imputat? (default: FALSE).}
 }
 \value{
 Una llista que conté:

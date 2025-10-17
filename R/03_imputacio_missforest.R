@@ -8,12 +8,18 @@
 #' @param optim_mtry Booleà (`TRUE`/`FALSE`) per optimitzar `mtry`.
 #' @param ntree Nombre d'arbres a créixer al bosc.
 #' @param maxiter Nombre màxim d'iteracions de l'algorisme.
-#' @param ... Altres paràmetres per a `missForest::missForest()`.
+#' @param verbose Lògic. Si és `TRUE`, mostra missatges de `missForest`.
+#' @param set_seed Un número per fixar la llavor aleatòria i assegurar la reproductibilitat.
+
 #'
 #' @return Una llista que conté:
 #'   - `imputed_df`: El data frame amb els valors imputats i les columnes 'flag_*'.
 #'   - `original_df`: (Opcional) El data frame original.
 #'   - `report`: (Opcional) Una llista amb un resum i el detall de la imputació.
+#' @importFrom missForest missForest
+#' @importFrom purrr possibly map map_df reduce
+#' @importFrom tidyr nest unnest pivot_longer
+#' 
 #' @export
 #' @examples
 #' # Crear un data frame d'exemple amb NAs
@@ -38,8 +44,8 @@
 imputacio_missforest <- function(
   df,
   seleccio_variables,
-  grup_by = NULL,
-  grup_by_reserva = NULL,
+  grup_by,
+  grup_by_reserva,
   optim_mtry = FALSE,
   ntree = 100,
   maxiter = 10,
@@ -49,8 +55,8 @@ imputacio_missforest <- function(
   retornar_original = FALSE)
 {
   ### 'Quositation'
-  grup_by_sym <- rlang::ensym(grup_by)
-  grup_by_reserva_sym <- rlang::ensym(grup_by_reserva)
+  grup_by_quo <- rlang::enquo(grup_by)
+  grup_by_reserva_quo <- rlang::enquo(grup_by_reserva)
   seleccio_variables_enquo <- rlang::enquo(seleccio_variables) # Mantenim enquo per seleccions complexes
   
   df_original <- df
@@ -69,14 +75,14 @@ imputacio_missforest <- function(
   df_out <- df_out %>%
     dplyr::mutate(dplyr::across(all_of(impute_vars_names), ~0, .names = 'flag_{.col}'))
   
-  #' @title Funció interna per executar missForest
-  #' @description Envolta la funció `missForest::missForest` per gestionar l'optimització
-  #' opcional de `mtry`.
-  #' @param df_miss Data frame amb les dades a imputar.
-  #' @param optim Booleà per activar o desactivar l'optimització de `mtry`.
-  #' @param ... Altres paràmetres per a `missForest::missForest`.
-  #' @return Un objecte de classe `missForest`.
-  #' @keywords internal
+  # Funció interna per executar missForest
+  # Envolta la funció `missForest::missForest` per gestionar l'optimització
+  # opcional de `mtry`.
+  # @param df_miss Data frame amb les dades a imputar.
+  # @param optim Booleà per activar o desactivar l'optimització de `mtry`.
+  # @param ... Altres paràmetres per a `missForest::missForest`.
+  # @return Un objecte de classe `missForest`.
+  # @keywords internal
   f_missforest <- function(df_miss, optim = FALSE, ...) {
     if (isTRUE(optim)) {
       p <- ncol(df_miss)
@@ -110,7 +116,7 @@ imputacio_missforest <- function(
   }
   
   ### Lògica d'imputació
-  if (rlang::is_missing(grup_by_sym)) {
+  if (rlang::quo_is_missing(grup_by_quo)) {
     # 3. Imputació global (if no group_by specified or still NAs)
     if(sum(is.na(df_out %>% dplyr::select(!!seleccio_variables_enquo))) > 0) {
       # Get current NA status of impute_vars
@@ -139,7 +145,7 @@ imputacio_missforest <- function(
   } else {
     # Imputació per grup_by
     df_out <- df_out %>%
-      dplyr::group_by(!!grup_by_sym) %>%
+      dplyr::group_by(!!grup_by_quo) %>%
       tidyr::nest()
       
     nested_data <- df_out %>%
@@ -179,7 +185,7 @@ imputacio_missforest <- function(
       )
     
     df_out <- nested_data %>%
-      dplyr::select(-data) %>%
+      dplyr::select(-.data$data) %>%
       tidyr::unnest(cols = c(imputed_data)) %>%
       dplyr::ungroup()
       
@@ -193,9 +199,9 @@ imputacio_missforest <- function(
     }
     
     # Imputació per grup_by_reserva
-    if (any(is.na(df_out %>% dplyr::select(!!seleccio_variables_enquo))) && !rlang::is_missing(grup_by_reserva_sym)) {
+    if (any(is.na(df_out %>% dplyr::select(!!seleccio_variables_enquo))) && !rlang::quo_is_missing(grup_by_reserva_quo)) {
       df_out <- df_out %>%
-        dplyr::group_by(!!grup_by_reserva_sym) %>%
+        dplyr::group_by(!!grup_by_reserva_quo) %>%
         tidyr::nest()
 
       nested_data_reserva <- df_out %>%
@@ -235,7 +241,7 @@ imputacio_missforest <- function(
         )
         
       df_out <- nested_data_reserva %>%
-        dplyr::select(-data) %>%
+        dplyr::select(-.data$data) %>%
         tidyr::unnest(cols = c(imputed_data)) %>%
         dplyr::ungroup()
         
@@ -262,24 +268,24 @@ imputacio_missforest <- function(
 
     report <- report %>%
       dplyr::mutate(
-        n_imp_grup = if ("na_post_grup_by" %in% names(.)) n_na_ori - na_post_grup_by else 0,
-        n_imp_reserva = if (all(c("na_post_grup_by", "na_post_reserva") %in% names(.))) na_post_grup_by - na_post_reserva else 0
+        n_imp_grup = if ("na_post_grup_by" %in% names(.)) .data$n_na_ori - .data$na_post_grup_by else 0,
+        n_imp_reserva = if (all(c("na_post_grup_by", "na_post_reserva") %in% names(.))) .data$na_post_grup_by - .data$na_post_reserva else 0
       )
 
     report_totals <- report %>%
       dplyr::summarise(
         variable = "Total",
-        n_na_ori = sum(n_na_ori, na.rm = TRUE),
-        n_imp_grup = sum(n_imp_grup, na.rm = TRUE),
-        n_imp_reserva = sum(n_imp_reserva, na.rm = TRUE),
-        n_na_finals = sum(n_na_finals, na.rm = TRUE)
+        n_na_ori = sum(.data$n_na_ori, na.rm = TRUE),
+        n_imp_grup = sum(.data$n_imp_grup, na.rm = TRUE),
+        n_imp_reserva = sum(.data$n_imp_reserva, na.rm = TRUE),
+        n_na_finals = sum(.data$n_na_finals, na.rm = TRUE)
       )
 
     report <- dplyr::bind_rows(report, report_totals) %>%
       dplyr::select(
-        variable, 
-        n_na_ori, n_imp_grup, n_imp_reserva, n_na_finals) %>%
-        dplyr::filter(!str_detect(variable, pattern = "flag_"))
+        .data$variable, 
+        .data$n_na_ori, .data$n_imp_grup, .data$n_imp_reserva, .data$n_na_finals) %>%
+        dplyr::filter(!stringr::str_detect(.data$variable, pattern = "flag_"))
   }
 
   ### Sortida
@@ -288,8 +294,8 @@ imputacio_missforest <- function(
   flag_cols <- names(df_out) %>% stringr::str_subset("^flag_")
 
   df_out <- df_out %>%
-    dplyr::arrange(.row_id) %>%
-    dplyr::select(all_of(original_cols), all_of(flag_cols))
+    dplyr::arrange(.data$.row_id) %>%
+    dplyr::select(dplyr::all_of(original_cols), dplyr::all_of(flag_cols))
 
   result <- list(imputed_df = df_out)
   

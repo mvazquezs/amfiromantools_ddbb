@@ -23,6 +23,8 @@
 #' @import dplyr
 #' @import rlang
 #' @importFrom e1071 skewness kurtosis
+#' @importFrom purrr map
+#' @importFrom crayon bold blue
 #'
 #' @seealso \code{\link[e1071]{skewness}} i \code{\link[e1071]{kurtosis}} per al càlcul d'asimetria i curtosi.
 #'
@@ -182,7 +184,7 @@ tab_summary <- function(
   if (isTRUE(bind_rows)) {
     
     df_tab_all <- dplyr::bind_rows(l_tab_all, .id = 'variable') %>%
-      dplyr::mutate(variable = as.factor(variable)) %>%
+      dplyr::mutate(variable = as.factor(.data$variable)) %>%
       dplyr::mutate(dplyr::across(where(is.double), ~ round(., digits))) %>%
       dplyr::mutate(across(where(is.double), ~ ifelse(is.finite(.), ., NA))) %>%
       dplyr::relocate(dplyr::any_of(cols_ordre_final))

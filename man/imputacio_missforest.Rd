@@ -7,8 +7,8 @@
 imputacio_missforest(
   df,
   seleccio_variables,
-  grup_by = NULL,
-  grup_by_reserva = NULL,
+  grup_by,
+  grup_by_reserva,
   optim_mtry = FALSE,
   ntree = 100,
   maxiter = 10,
@@ -33,13 +33,13 @@ imputacio_missforest(
 
 \item{maxiter}{Nombre màxim d'iteracions de l'algorisme.}
 
+\item{verbose}{Lògic. Si és \code{TRUE}, mostra missatges de \code{missForest}.}
+
+\item{set_seed}{Un número per fixar la llavor aleatòria i assegurar la reproductibilitat.}
+
 \item{report_imputacio}{Retorna un report de la imputació? (default: TRUE).}
 
-\item{df_miss}{Data frame amb les dades a imputar.}
-
-\item{optim}{Booleà per activar o desactivar l'optimització de \code{mtry}.}
-
-\item{...}{Altres paràmetres per a \code{missForest::missForest}.}
+\item{retornar_original}{Retorna el data frame original juntament amb l'imputat? (default: FALSE).}
 }
 \value{
 Una llista que conté:
@@ -48,16 +48,11 @@ Una llista que conté:
 \item \code{original_df}: (Opcional) El data frame original.
 \item \code{report}: (Opcional) Una llista amb un resum i el detall de la imputació.
 }
-
-Un objecte de classe \code{missForest}.
 }
 \description{
 Aquesta funció realitza una imputació de valors perduts utilitzant l'algorisme
 \code{missForest}. Permet l'optimització de paràmetres i l'agrupació de dades.
 Genera columnes de "flags" per a cada variable imputada.
-
-Envolta la funció \code{missForest::missForest} per gestionar l'optimització
-opcional de \code{mtry}.
 }
 \examples{
 # Crear un data frame d'exemple amb NAs
@@ -80,4 +75,3 @@ resultat_miss_agrupat <- imputacio_missforest(
   grup_by = grup
 )
 }
-\keyword{internal}

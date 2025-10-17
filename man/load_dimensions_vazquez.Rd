@@ -68,11 +68,9 @@ df_llarg <- load_dimensions_vazquez(format_llarg = TRUE)
 
 }
 \seealso{
-\code{\link{dplyr::mutate}}
+\code{\link[dplyr]{mutate}}, \code{\link[dplyr]{arrange}}
 
-\code{\link{dplyr::arrange}}
+\code{\link[tibble]{tibble}}
 
-\code{\link{tibble::tibble}}
-
-\code{\link{rlang::enquo}}
+\code{\link[rlang]{enquo}}
 }
