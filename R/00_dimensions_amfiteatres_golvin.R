@@ -1,53 +1,47 @@
 #' @title Extracció, estructuració i fusió de dades d'amfiteatres romans
 #' 
 #' @description Aquesta funció processa dades d'amfiteatres romans i republicans extretes de taules,
-#'              calcula mètriques derivades i fusiona les dades en un únic dataframe.
+#' calcula mètriques derivades i fusiona les dades en un únic dataframe.
 #' 
 #' @details La funció realitza els següents passos:
-#'          1. Extreu les dades de la taula d'amfiteatres romans.
-#'          2. Calcula les columnes derivades 'sasc' (percentatge de l'arena respecte a la cavea) i 'ab_forma_arena' (relació d'aspecte de l'arena).
-#'          3. Extreu les dades de la taula d'amfiteatres republicans.
-#'          4. Fusiona les dues taules, conservant totes les files de totes dues taules.
-#'          5. Afegeix etiquetes descriptives als noms de les columnes del dataframe resultant.
+#' 1. Extreu les dades de les taules originals de Golvin (1988).
+#' 2. Calcula mètriques derivades com ràtios, superfícies i perímetres.
+#' 3. Fusiona totes les taules en un únic `tibble`.
+#' 4. Permet filtrar, seleccionar i transformar les dades.
+#' 
 #' @param filtrar_provincia Lògic. Accepta noms de provincies altimperials.
 #' @param filtrar_pais Lògic. Accepta noms de païssos moderns en anglès.
 #' @param seleccionar_columnes Selecciona les columnes desitjades per la sortida del dataframe.
 #' @param retornar_originals Lògic. Si és TRUE, retorna una llista amb els conjunts de dades originals i el fusionat. Si és FALSE, retorna només el conjunt de dades fusionat.
 #' @param format_llarg Lògic. Si és TRUE, el dataframe de sortida es retorna en format llarg (pivotat).
 #' 
-#' @return Un dataframe de R (o una llista de dataframes) amb les dades fusionades i estructurades dels amfiteatres romans i republicans.
-#' 
-#' @rdname load_dimensions_golvin
-#' 
+#' @return Un `tibble` (o una llista de `tibbles`) amb les dades fusionades i estructurades.
+#'
 #' @import dplyr
 #' @import tibble
 #' @import rlang
 #' @importFrom magrittr %>%
 #' 
 #' @seealso \code{\link{dplyr::mutate}}
-#' @seealso \code{\link{dplyr::arrange}}
-#' @seealso \code{\link{tibble::tibble}}
-#' @seealso \coce{\link{rlang::enquo}}
+#' @seealso \code{\link{tidyr::pivot_longer}}
 #' 
 #' @examples
-#' # Exemple 1: Carregar i fusionar tots els dataframes
-#' # df_complet <- load_dimensions_golvin()
-#' 
-#' # Exemple 2: Carregar i seleccionar columnes específiques
-#' # df_filtrat <- tableau_dimension(
-#' #  seleccionar_columnes = contains('_'),
-#' #  retornar_originals = FALSE)
-#' 
-#' # Exemple 3: Carregar i seleccionar columnes específiques
-#' # df_columnes_sel <- load_dimensions_golvin(
-#' #  filtrar_provincia = 'hispania',
-#' #  filtrar_pais = NULL,
-#' #  seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'), 
-#' #  retornar_originals = FALSE)
+#' # Carregar totes les dades
+#' df_complet <- load_dimensions_golvin()
 #'
-#' # Exemple 4: Carregar i pivotar les dades a format llarg
-#' # df_llarg <- load_dimensions_golvin(format_llarg = TRUE)
-#' 
+#' # Carregar dades filtrant per província i seleccionant columnes
+#' df_hispania <- load_dimensions_golvin(
+#'   filtrar_provincia = 'hispania',
+#'   seleccionar_columnes = c(nom, pais, amplada_general, alcada_general)
+#' )
+#'
+#' # Carregar dades en format llarg
+#' df_llarg <- load_dimensions_golvin(
+#'   seleccionar_columnes = c(amplada_arena, alcada_arena),
+#'   format_llarg = TRUE
+#' )
+#'
+#' @rdname load_dimensions_golvin
 #' @export
 load_dimensions_golvin <- function(
   filtrar_provincia = NULL,
@@ -683,26 +677,6 @@ load_dimensions_golvin <- function(
 ### Fusió de les dues taules per la columna 'nom' i 'original_id'
   taula_fusionada <- dplyr::bind_rows(l_tableau) %>%
     dplyr::arrange('index_id', 'nom',  'provincia_romana', 'pais')
-
-### Guardar la taula fusionada com a arxiu CSV
-  # Esborrar arxius CSV existents amb el mateix patró
-  if(isFALSE(format_llarg) & rlang::quo_is_null(seleccionar_columnes) & is.null(filtrar_provincia) & is.null(filtrar_pais)) {
-   
-    arxiu_a_esborrar <- list.files(
-      path = file.path('data', '01_data_golvin'),
-      pattern = '^01_.*_dimensions_amphitheatres_golvin\\.csv$',
-      full.names = TRUE)
-
-    if (length(arxiu_a_esborrar) > 0) { file.remove(arxiu_a_esborrar) }
-
-    # Crear el nom de l'arxiu nou i guardar-lo
-    data_actual <- format(Sys.Date(), '%y.%m.%d')
-    nom_arxiu <- paste0('01_', data_actual, '_dimensions_amphitheatres_golvin.csv')
-    cami_arxiu <- file.path('data', '01_data_golvin', nom_arxiu)
-
-    utils::write.csv2(taula_fusionada, file = cami_arxiu, na = 'NA', row.names = FALSE)
-  
-  }
 
 
   if (isTRUE(retornar_originals)) {

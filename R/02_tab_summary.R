@@ -1,47 +1,40 @@
-### the 'tab_summary'
-
 #' @title Calcula estadístiques descriptives per a un `data.frame`.
-#' @description Calcula un conjunt complet d'estadístiques descriptives per a variables numèriques, incloent quantils, mitjana, mediana, asimetria, curtosi i el test de Shapiro-Wilk. La funció està optimitzada per al seu ús amb el `tidyverse`.
+#' @description Calcula un conjunt complet d'estadístiques descriptives per a variables numèriques.
+#' La funció està optimitzada per al seu ús amb el `tidyverse`.
+#'
+#' @details Aquesta funció utilitza `dplyr::summarise()` i `lapply()` per aplicar de manera eficient
+#' múltiples funcions a diverses variables. Les proves d'asimetria i curtosi només s'executaran
+#' si s'especifiquen a `stats_adicionals`.
 #'
 #' @param df El `data.frame` o `tibble` d'entrada.
-#' @param seleccio_variables Les variables numèriques a analitzar. Es pot utilitzar la sintaxi de selecció de `dplyr` (per exemple, `starts_with("var")`, `contains("grup")`).
 #' @param grup_by Les variables per agrupar les dades. També pot utilitzar la sintaxi de selecció de `dplyr`. Si es deixa com a `NULL`, les estadístiques es calculen per a tot el `data.frame`.
 #' @param addicio_info Columnes addicionals del dataframe original per incloure a la taula de resultats. Útil per afegir informació contextual que és constant dins de cada grup.
-#' @param stats_adicionals Un vector de caràcters per especificar estadístiques addicionals a calcular. Les opcions inclouen: "shapiro" (per al test de Shapiro-Wilk), "skewness" (asimetria) i "kurtosis" (curtosi).
+#' @param seleccio_variables Les variables numèriques a analitzar. Es pot utilitzar la sintaxi de selecció de `dplyr` (per exemple, `starts_with("var")`, `contains("grup")`).
+#' @param stats_adicionals Lògic. Si és `TRUE`, calcula estadístiques addicionals com curtosi i asimetria.
+#' @param sd_num Un valor numèric per definir el nombre de desviacions estàndard per a les estadístiques de límit inferior i superior.
 #' @param q_lower Un valor numèric per a calcular un quantil de límit inferior.
 #' @param q_upper Un valor numèric per a calcular un quantil de límit superior.
-#' @param sd_num Un valor numèric per definir el nombre de desviacions estàndard per a les estadístiques de límit inferior i superior.
 #' @param na.rm Un valor lògic. Si és `TRUE` (per defecte), els valors `NA` s'eliminen abans de tots els càlculs.
 #' @param bind_rows Un valor lògic. Si és `TRUE` (per defecte), la llista de `tibbles` es combina en un sol `tibble`, afegint una columna anomenada `variable` amb el nom de la variable analitzada.
 #' @param digits El nombre de dígits decimals a mostrar per a les variables `double`. Per defecte és 2. Les variables `integer` no s'arrodoneixen.
 #'
-#' @details Aquesta funció utilitza `dplyr::summarise()` i `dplyr::across()` per aplicar de manera eficient múltiples funcions a diverses variables. Les proves de Shapiro-Wilk, asimetria i curtosi només s'executaran si s'especifiquen a `additional_stats`. El test de Shapiro-Wilk requereix com a mínim 3 dades no perdudes per a cada grup i variable.
-#'
 #' @return Un `tibble` que conté les estadístiques descriptives calculades per a cada variable i grup.
 #'
-#' @importFrom dplyr::select
-#' @importFrom dplyr::group_by
-#' @importFrom dplyr::summarise_at
-#' @importFrom tibble::as_tibble
-#' @importFrom e1071::skewness
-#' @importFrom e1071::kurtosis
-#' @seealso \code{\link[stats]{shapiro.test}} per al test de Shapiro-Wilk.
+#' @import dplyr
+#' @import rlang
+#' @importFrom e1071 skewness kurtosis
+#'
 #' @seealso \code{\link[e1071]{skewness}} i \code{\link[e1071]{kurtosis}} per al càlcul d'asimetria i curtosi.
 #'
 #' @examples
-#' # Crea un data.frame de prova
-#' df_test <- data.frame(
-#'   grup_a = c("A", "A", "A", "B", "B", "B"),
-#'   grup_b = c("X", "Y", "Z", "X", "Y", "Z"),
-#'   valor1 = c(1, 2, 3, 4, 5, 6),
-#'   valor2 = c(10.123, 20.456, NA, 40.789, 50.123, 60.456),
-#'   valor_extra = c(10, 20, 30, 40, 50, 60))
+#' # Carreguem les dades d'exemple
+#' df_golvin <- read.csv2("data/00_data_exemple/df_golvin.csv", dec = ".")
 #'
 #' # Calcula estadístiques descriptives bàsiques per grup amb arrodoniment
 #' tab_summary(
-#'   df = df_test, 
-#'   seleccio_variables = starts_with('valor'),
-#'   grup_by = 'grup_a',
+#'   df = df_golvin,
+#'   seleccio_variables = starts_with('amplada'),
+#'   grup_by = pais,
 #'   stats_adicionals = TRUE,
 #'   sd_num = 3,
 #'   q_lower = .05,
@@ -52,6 +45,7 @@
 #'
 #' @rdname tab_summary
 #' @export
+#'
 tab_summary <- function(
     df,
     grup_by = NULL,
