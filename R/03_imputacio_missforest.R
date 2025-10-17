@@ -1,8 +1,8 @@
-#' Imputació de dades amb `missForest` amb optimització i agrupació
-#'
+#' @title Imputació de dades amb `missForest`
 #' @description
 #' Aquesta funció realitza una imputació de valors perduts utilitzant l'algorisme
-#' `missForest`. Genera columnes de "flags" per a cada variable imputada.
+#' `missForest`. Permet l'optimització de paràmetres i l'agrupació de dades.
+#' Genera columnes de "flags" per a cada variable imputada.
 #'
 #' @inheritParams imputacio_estadistics
 #' @param optim_mtry Booleà (`TRUE`/`FALSE`) per optimitzar `mtry`.
@@ -15,6 +15,26 @@
 #'   - `original_df`: (Opcional) El data frame original.
 #'   - `report`: (Opcional) Una llista amb un resum i el detall de la imputació.
 #' @export
+#' @examples
+#' # Crear un data frame d'exemple amb NAs
+#' df_exemple_miss <- data.frame(
+#'   grup = as.factor(c("A", "A", "B", "B", "A", "B")),
+#'   valor1 = c(1, NA, 3, 4, 5, NA),
+#'   valor2 = c(NA, 2, 3, NA, 5, 6)
+#' )
+#'
+#' # Imputar amb missForest sense agrupar
+#' resultat_miss <- imputacio_missforest(
+#'   df = df_exemple_miss,
+#'   seleccio_variables = c(valor1, valor2)
+#' )
+#'
+#' # Imputar amb missForest agrupant per 'grup'
+#' resultat_miss_agrupat <- imputacio_missforest(
+#'   df = df_exemple_miss,
+#'   seleccio_variables = c(valor1, valor2),
+#'   grup_by = grup
+#' )
 imputacio_missforest <- function(
   df,
   seleccio_variables,

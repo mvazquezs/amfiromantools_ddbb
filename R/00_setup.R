@@ -45,9 +45,10 @@ amphi_load_packages <- function(update_packages = FALSE) {
 
   # Assegura que 'pacman' estigui instal·lat i carregat
   if (!requireNamespace('pacman', quietly = TRUE)) {
+  
     install.packages('pacman')
+  
   }
-  library(pacman)
 
   # Configura el repositori de CRAN
   local({
@@ -58,11 +59,11 @@ amphi_load_packages <- function(update_packages = FALSE) {
 
   # Llista de paquets a carregar
   packages_to_load <- c(
+    'devtools', 'usethis', 'crayon', 'janitor',
     'dplyr', 'tibble', 'readxl', 'data.table', 'stringr',
     'rlang', 'purrr', 'tidyr', 'missForest', 'psych',
     'DT', 'htmltools', 'knitr', 'webshot', 'webshot2', 'shiny',
     'gtsummary', 'gt', 'gtExtras', 'flextable', 'huxtable',
-    'crayon', 'janitor',
     'rstatix', 'Hmisc')
 
   # Carrega o instal·la els paquets amb pacman

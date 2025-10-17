@@ -64,16 +64,8 @@ load_dimensions_golvin <- function(
     
   }
 
-### Carrega de paquets requerits
-### Carrega de funcions necessaries
-  source('R/00_setup.R')
-  source('R/01_data_load.R')
 
   seleccionar_columnes <- rlang::enquo(seleccionar_columnes)
-
-### Carrega de paquets
-  amphi_load_packages(
-    update_packages = FALSE)
 
   ### Extracció i càlculs de la taula d'amfiteatres romans
   ### Identificació de taula 01 (pàgina 43)

@@ -1,6 +1,6 @@
-#' Imputació per estadístics de tendència central
-#'
-#' Aquesta funció realitza una imputació de valors perduts (NA) en un data frame.
+#' @title Imputació de valors perduts amb mètodes estadístics
+#' @description Aquesta funció realitza una imputació de valors perduts (NA) en un data frame
+#' utilitzant mètodes de tendència central (mitjana, mediana, etc.).
 #' Permet agrupar les dades per una o més variables i aplicar diferents mètodes
 #' d'imputació.
 #'
