@@ -57,7 +57,7 @@ i  Les dades ha estat carregat correctament
 ``` r
    
 
-  print(as_tibble(df_ample_vazq))
+  print(df_ample_vazq)
 ```
 
 # A tibble: 10 × 10
