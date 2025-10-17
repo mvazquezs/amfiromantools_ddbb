@@ -46,31 +46,25 @@ La funció realitza els següents passos:
 }
 }
 \examples{
-# Exemple 1: Carregar i fusionar tots els dataframes
-# df_complet <- load_dimensions_vazquez()
+\dontrun{
+# Carregar i fusionar tots els dataframes
+df_complet <- load_dimensions_vazquez()
 
-# Exemple 2: Carregar i filtrar per tipus d'edifici específic
-# df_filtrat <- load_dimensions_vazquez(
-#  filtrar_edifici = 'amphitheater')
+# Carregar i filtrar per tipus d'edifici específic
+df_filtrat <- load_dimensions_vazquez(
+ filtrar_edifici = 'amphitheater')
 
-# Exemple 3: Carregar i seleccionar columnes específiques
-# df_hispania_sel <- load_dimensions_vazquez(
-#  filtrar_edifici = 'amphitheater',
-#  filtrar_provincia = 'hispania',
-#  filtrar_pais = NULL,
-#  seleccionar_columnes = c(contains('amplada'), contains('alcada'), starts_with('nombre'), -contains('cavea'), 'bib'),
-#  retornar_originals = FALSE)
+# Carregar i seleccionar columnes específiques
+df_hispania_sel <- load_dimensions_vazquez(
+ filtrar_edifici = 'amphitheater',
+ filtrar_provincia = 'hispania',
+ filtrar_pais = NULL,
+ seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'),
+ retornar_originals = FALSE)
 
-#' # Exemple 4: Incompatibilitat entre `filtrar_provincia` i `filtrar_pais`
-# df_spain_france_sel <- load_dimensions_vazquez(
-#  filtrar_edifici = 'amphitheater',
-#  filtrar_provincia = NULL,
-#  filtrar_pais = c('spain', 'france'),
-#  seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), starts_with('nombre') 'bib'),
-#  retornar_originals = FALSE)
-
-# Exemple 5: Carregar i pivotar les dades a format llarg
-# df_llarg <- load_dimensions_vazquez(format_llarg = TRUE)
+# Carregar i pivotar les dades a format llarg
+df_llarg <- load_dimensions_vazquez(format_llarg = TRUE)
+}
 
 }
 \seealso{
@@ -80,5 +74,5 @@ La funció realitza els següents passos:
 
 \code{\link{tibble::tibble}}
 
-\coce{\link{rlang::enquo}}
+\code{\link{rlang::enquo}}
 }

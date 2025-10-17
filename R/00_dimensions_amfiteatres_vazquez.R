@@ -31,34 +31,28 @@
 #' @seealso \code{\link{dplyr::mutate}}
 #' @seealso \code{\link{dplyr::arrange}}
 #' @seealso \code{\link{tibble::tibble}}
-#' @seealso \coce{\link{rlang::enquo}}
+#' @seealso \code{\link{rlang::enquo}}
 #'
 #' @examples
-#' # Exemple 1: Carregar i fusionar tots els dataframes
-#' # df_complet <- load_dimensions_vazquez()
-#' 
-#' # Exemple 2: Carregar i filtrar per tipus d'edifici específic
-#' # df_filtrat <- load_dimensions_vazquez(
-#' #  filtrar_edifici = 'amphitheater')
-#' 
-#' # Exemple 3: Carregar i seleccionar columnes específiques
-#' # df_hispania_sel <- load_dimensions_vazquez(
-#' #  filtrar_edifici = 'amphitheater',
-#' #  filtrar_provincia = 'hispania',
-#' #  filtrar_pais = NULL,
-#' #  seleccionar_columnes = c(contains('amplada'), contains('alcada'), starts_with('nombre'), -contains('cavea'), 'bib'),
-#' #  retornar_originals = FALSE)
-#' 
-#' #' # Exemple 4: Incompatibilitat entre `filtrar_provincia` i `filtrar_pais`
-#' # df_spain_france_sel <- load_dimensions_vazquez(
-#' #  filtrar_edifici = 'amphitheater',
-#' #  filtrar_provincia = NULL,
-#' #  filtrar_pais = c('spain', 'france'),
-#' #  seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), starts_with('nombre') 'bib'),
-#' #  retornar_originals = FALSE)
+#' \dontrun{
+#' # Carregar i fusionar tots els dataframes
+#' df_complet <- load_dimensions_vazquez()
 #'
-#' # Exemple 5: Carregar i pivotar les dades a format llarg
-#' # df_llarg <- load_dimensions_vazquez(format_llarg = TRUE)
+#' # Carregar i filtrar per tipus d'edifici específic
+#' df_filtrat <- load_dimensions_vazquez(
+#'  filtrar_edifici = 'amphitheater')
+#'
+#' # Carregar i seleccionar columnes específiques
+#' df_hispania_sel <- load_dimensions_vazquez(
+#'  filtrar_edifici = 'amphitheater',
+#'  filtrar_provincia = 'hispania',
+#'  filtrar_pais = NULL,
+#'  seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'),
+#'  retornar_originals = FALSE)
+#'
+#' # Carregar i pivotar les dades a format llarg
+#' df_llarg <- load_dimensions_vazquez(format_llarg = TRUE)
+#' }
 #'
 #' @export
 load_dimensions_vazquez <- function(
@@ -78,25 +72,18 @@ load_dimensions_vazquez <- function(
   
   }
 
-### Carrega de paquets requerits
-### Carrega de funcions necessaries
-  source('R/00_setup.R')
-  source('R/01_data_load.R')
-
   # Captura d'expressions amb rlang
   seleccionar_columnes <- rlang::enquo(seleccionar_columnes)
   filtrar_provincia_quo <- rlang::enquo(filtrar_provincia)
   filtrar_pais_quo <- rlang::enquo(filtrar_pais)
-
-### Carrega de paquets
-  amphi_load_packages(
-    update_packages = FALSE)
 
 ### Carrega de fitxers
   l_fitxers <- amphi_list_files(
 	  home_folder = 'data/02_data_vazquez',
     recursive = TRUE,
     pattern = 'csv')[[1]][-1]
+  l_fitxers <- list.files(path = 'data/02_data_vazquez', recursive = TRUE, pattern = 'csv', full.names = TRUE)
+  l_data_vazquez <- lapply(l_fitxers, utils::read.csv2, dec = '.', na.strings = "NA")
 
 ### Carrega de dades
   l_data_vazquez <- amphi_read_data(

@@ -54,10 +54,11 @@ múltiples funcions a diverses variables. Les proves d'asimetria i curtosi nomé
 si s'especifiquen a \code{stats_adicionals}.
 }
 \examples{
-# Carreguem les dades d'exemple
-df_golvin <- read.csv2("data/00_data_exemple/df_golvin.csv", dec = ".")
+\dontrun{
+# Carreguem les dades amb una funció del paquet
+df_golvin <- load_dimensions_golvin()
 
-# Calcula estadístiques descriptives bàsiques per grup amb arrodoniment
+# Calcula estadístiques descriptives per grup
 tab_summary(
   df = df_golvin,
   seleccio_variables = starts_with('amplada'),
@@ -69,6 +70,7 @@ tab_summary(
   na.rm = TRUE,
   bind_rows = TRUE,
   digits = 2)
+}
 
 }
 \seealso{
