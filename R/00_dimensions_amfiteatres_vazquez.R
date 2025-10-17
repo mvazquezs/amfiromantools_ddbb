@@ -230,7 +230,7 @@ load_dimensions_vazquez <- function(
           values_to = 'valor',
           values_drop_na = FALSE))
     
-    } else if (isFALSE(format_llarg) & rlang::quo_is_null(seleccionar_columnes)) {
+    } else if (isTRUE(format_llarg) & rlang::quo_is_null(seleccionar_columnes)) {
 
       # Double check 02
       stopifnot(all(sapply(l_data_vazquez, ncol) == 32))
