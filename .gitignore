@@ -3,6 +3,7 @@
 *.csv
 
 ## Fitxers de l'entorn de treball de R
+amfiromantools_ddbb.Rproj
 .RData
 .Rproj.user/
 .Rhistory
