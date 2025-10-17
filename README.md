@@ -5,6 +5,7 @@
 # amfiromantools_ddbb
 
 <!-- badges: start -->
+[![R-CMD-check](https://github.com/mvazquezs/amfiromantools_ddbb/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/mvazquezs/amfiromantools_ddbb/actions/workflows/R-CMD-check.yaml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 <!-- badges: end -->
 
@@ -18,8 +19,8 @@ Podeu instal·lar la versió de desenvolupament des de GitHub amb:
 
 
 ``` r
-if (!require('devtools')) install.packages('devtools')
-devtools::install_github('mvazquezs/amfiromantools_ddbb')
+if (!require("devtools")) install.packages("devtools")
+devtools::install_github("mvazquezs/amfiromantools_ddbb")
 ```
 
 ## Ús
@@ -47,22 +48,55 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
       filtrar_edifici = 'amphitheater',
       filtrar_provincia = c('hispania', 'panonia'),
       seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib')) %>%
-    head(10) %>%
-    print()
+    head(10)
 ```
 
 i  Els paquets han estat carregats correctament
 i  Les dades ha estat carregat correctament
-# A tibble: 10 × 10
-   index_id nom   t_building   provincia_romana pais  amplada_general amplada_arena alcada_general alcada_arena bib                  
-   <chr>    <chr> <chr>        <chr>            <chr>           <dbl>         <dbl>          <dbl>        <dbl> <chr>                
- 1 #010     CARMO amphitheater hispania_baetica spain            108           58.8            98          38.6 2015_jimenez         
- 2 #010     CARMO amphitheater hispania_baetica spain            130           58.8           111          38.6 2014_gonzalez        
- 3 #010     CARMO amphitheater hispania_baetica spain             NA           58.8            NA          39   2014_gonzalez        
- 4 #010     CARMO amphitheater hispania_baetica spain            131.          58             111.         39   2014_golvin          
- 5 #010     CARMO amphitheater hispania_baetica spain            108           58.8            98          38.6 2011_amphitheatrum_de
- 6 #010     CARMO amphitheater hispania_baetica spain            108           58              98          39   2011_amphitheatrum_de
- 7 #010     CARMO amphitheater hispania_baetica spain             90           58              NA          39   2007_welch           
- 8 #010     CARMO amphitheater hispania_baetica spain            131           58             111          39   2016_stelius         
- 9 #010     CARMO amphitheater hispania_baetica spain            131.          NA             111.         NA   2019_hackett         
-10 #010     CARMO amphitheater hispania_baetica spain             NA           NA              NA          NA   2016_sfsheath_com    
+
+``` r
+   
+
+  df_ample_vazq
+#> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#010", : Couldn't print whole table in max_width = 80 characters.
+#> Printing 8/10 columns.
+```
+
+------------------------------------------------------------------------
+ **inde** **nom** **t_bu** **prov** **pais** **ampl** **ampl** **alca** 
+ **x_id**         **ildi** **inci**          **ada_** **ada_** **da_g** 
+                  **ng**   **a_ro**          **gene** **aren** **ener** 
+                           **mana**           **ral**    **a**   **al** 
+--------- ------- -------- -------- -------- -------- -------- -------- 
+ #010     CARMO   amphithe hispania spain         108     58.8       98 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         130     58.8      111 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain                 58.8          
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         131       58      111 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         108     58.8       98 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         108       58       98 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain          90       58          
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         131       58      111 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         131               111 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain                               
+                  ater     _baetica                                     
+------------------------------------------------------------------------
+
+
