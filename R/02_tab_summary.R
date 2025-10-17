@@ -27,10 +27,11 @@
 #' @seealso \code{\link[e1071]{skewness}} i \code{\link[e1071]{kurtosis}} per al càlcul d'asimetria i curtosi.
 #'
 #' @examples
-#' # Carreguem les dades d'exemple
-#' df_golvin <- read.csv2("data/00_data_exemple/df_golvin.csv", dec = ".")
-#'
-#' # Calcula estadístiques descriptives bàsiques per grup amb arrodoniment
+#' \dontrun{
+#' # Carreguem les dades amb una funció del paquet
+#' df_golvin <- load_dimensions_golvin()
+#' 
+#' # Calcula estadístiques descriptives per grup
 #' tab_summary(
 #'   df = df_golvin,
 #'   seleccio_variables = starts_with('amplada'),
@@ -42,6 +43,7 @@
 #'   na.rm = TRUE,
 #'   bind_rows = TRUE,
 #'   digits = 2)
+#' }
 #'
 #' @rdname tab_summary
 #' @export
