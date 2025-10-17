@@ -5,7 +5,6 @@
 # amfiromantools_ddbb
 
 <!-- badges: start -->
-[![R build status](https://github.com/mvazquezs/amfiromantools_ddbb/workflows/R-CMD-check/badge.svg)](https:/mvazquezs/amfiromantools_ddbb/github.com/actions)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 <!-- badges: end -->
 
