@@ -1,5 +1,4 @@
 ---
-output: github_document
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -70,98 +69,54 @@ Llegim les dades d'exemple des dels fitxers CSV que hem generat prèviament.
 ``` r
 ### Carreguem les dades de Golvin des del fitxer d'exemple
   df_golvin <- read.csv2(
-      'data/00_data_exemple/01_data_exemple_golvin.csv', 
-      dec = '.') %>%
-    as_tibble()
+      'data/00_data_exemple/df_golvin.csv', 
+      dec = '.')
+#> Warning in file(file, "rt"): no es pot obrir el fitxer «data/00_data_exemple/df_golvin.csv»: No such file or directory
+#> Error in file(file, "rt"): cannot open the connection
 
-### Mostrem les primeres files i les dimensions del dataframe
-  head(df_golvin, 10)
-#> Warning in knit_print.huxtable(ht): Unrecognized output format "github". Using `to_screen` to print huxtables.
-#> Set options("huxtable.knitr_output_format") manually to "latex", "html", "rtf", "docx", "pptx", "md", "typst" or "screen".
+### Mostrem les primeres files del dataframe amb un format net
+  knitr::kable(head(df_golvin))
 ```
 
-  ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  │ index_id   nom        provinci   pais      amplada_   alcada_a   amplada_   alcada_g   nombre_p   amplada_   ratio_ar   ratio_ge   superfic  
-  │                       a_romana                arena       rena    general     eneral      laces      cavea        ena      neral   ie_arena  
-  ├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-  │ #010       CARMO      hispania   spain         58.8                   131      111        24195       36.2                  1.18             
-  │                       _baetica                                                                                                               
-  │ #011       UCUBI      hispania   spain         35                                                                                            
-  │                       _baetica                                                                                                               
-  │ #031       TOMEN Y    britania   wales         35         28           52       46         2772        8.5   1.25           1.13   770       
-  │            MUR                                                                                                                               
-  │ #032       CHARTERH   britania   england       35         24           50       39         2179        7.5   1.46           1.28   660       
-  │            OUSE                                                                                                                              
-  │ #033       CORINIUM   britania   england       49         41           89       81        10210       20     1.2            1.1    1.58e+03  
-  │            DOBUNNOR                                                                                                                          
-  │            UM                                                                                                                                
-  │ #034       DURNOVAR   britania   england       58         47           88       77         7952       15     1.23           1.14   2.14e+03  
-  │            IA                                                                                                                                
-  │ #035       NOV.       britania   england       56         47           88                                    1.19                  2.07e+03  
-  │            REGENSIU                                                                                                                          
-  │            M                                                                                                                                 
-  │ #040       CALLEVA    britania   england       49         40           80       70         7147       15.5   1.22e+03       1.14   1.54e+03  
-  │            ATREBATU                                                                                                                          
-  │            M                                                                                                                                 
-  │ #077       EMERITA    hispania   spain         64.5       41.2        126      103        20225       30.9   1.57           1.23   2.09e+03  
-  │            AUGUSTA    _lusitan                                                                                                               
-  │                       ia                                                                                                                     
-  │ #088       SEGOBRIG   hispania   spain         40.5       34           75       68.5       7383       17.2   1.19           1.09   1.08e+03  
-  │            A          _tarraco                                                                                                               
-  │                       nensis                                                                                                                 
-  └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-Column names: index_id, nom, provincia_romana, pais, amplada_arena, alcada_arena, amplada_general, alcada_general, nombre_places, amplada_cavea,
-ratio_arena, ratio_general, superficie_arena, superficie_general, superficie_cavea, perimetre_arena, perimetre_general, ratio_cavea, bib
 
-13/19 columns shown.
+|index_id |nom                 |provincia_romana |pais    | amplada_arena| alcada_arena| amplada_general| alcada_general| nombre_places| amplada_cavea| ratio_arena| ratio_general| superficie_arena| superficie_general| superficie_cavea| perimetre_arena| perimetre_general| ratio_cavea|bib         |
+|:--------|:-------------------|:----------------|:-------|-------------:|------------:|---------------:|--------------:|-------------:|-------------:|-----------:|-------------:|----------------:|------------------:|----------------:|---------------:|-----------------:|-----------:|:-----------|
+|#010     |CARMO               |hispania_baetica |spain   |          58.8|           NA|           131.2|          111.4|         24195|          36.2|          NA|      1.177738|               NA|          11479.128|               NA|              NA|          381.0752|          NA|1988_golvin |
+|#011     |UCUBI               |hispania_baetica |spain   |          35.0|           NA|              NA|             NA|            NA|            NA|          NA|            NA|               NA|                 NA|               NA|              NA|                NA|          NA|1988_golvin |
+|#031     |TOMEN Y MUR         |britania         |wales   |          35.0|           28|            52.0|           46.0|          2772|           8.5|    1.250000|      1.130435|         769.6902|           1878.672|         1108.982|        98.96017|          153.9380|   0.4096990|1988_golvin |
+|#032     |CHARTERHOUSE        |britania         |england |          35.0|           24|            50.0|           39.0|          2179|           7.5|    1.458333|      1.282051|         659.7345|           1531.526|          871.792|        92.67698|          139.8009|   0.4307692|1988_golvin |
+|#033     |CORINIUM DOBUNNORUM |britania         |england |          49.0|           41|            89.0|           81.0|         10210|          20.0|    1.195122|      1.098765|        1577.8649|           5661.935|         4084.070|       141.37167|          267.0354|   0.2786794|1988_golvin |
+|#034     |DURNOVARIA          |britania         |england |          58.0|           47|            88.0|           77.0|          7952|          15.0|    1.234043|      1.142857|        2140.9954|           5321.858|         3180.863|       164.93361|          259.1814|   0.4023022|1988_golvin |
+
+
 
 ``` r
 
 
 ### Carreguem les dades de Vàzquez-Santiago des del fitxer d'exemple
   df_vazquez <- read.csv2(
-      'data/00_data_exemple/02_data_exemple_vazquez.csv', 
-      dec = '.') %>%
-    as_tibble()
+    'data/00_data_exemple/df_vazquez.csv', 
+    dec = '.')
+#> Warning in file(file, "rt"): no es pot obrir el fitxer «data/00_data_exemple/df_vazquez.csv»: No such file or directory
+#> Error in file(file, "rt"): cannot open the connection
 
-### Mostrem les primeres files i les dimensions del dataframe
-  head(df_vazquez, 10)
-#> Warning in knit_print.huxtable(ht): Unrecognized output format "github". Using `to_screen` to print huxtables.
-#> Set options("huxtable.knitr_output_format") manually to "latex", "html", "rtf", "docx", "pptx", "md", "typst" or "screen".
+### Mostrem les primeres files del dataframe
+  knitr::kable(head(df_vazquez))
 ```
 
-      ┌──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-      │ place   phase   nom     hackett_   index_id   vasa_cla   t_buildi   dinasty_   amplada_   alcada_g   overall_   amplada_   alcada_a  
-      │                         class                 ss         ng         gr          general     eneral         m2      arena       rena  
-      ├──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea        108         98                  58.8       38.6  
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea        130        111                  58.8       38.6  
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea                                        58.8       39    
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea        131        111                  58         39    
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea        108         98                  58.8       38.6  
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea        108         98                  58         39    
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea         90                             58         39    
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea        131        111                  58         39    
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea        131        111   1.15e+04                        
-      │                                               2          ater       n                                                                
-      │ carmo           CARMO   hispb#02   #010       hisbae#0   amphithe   caesarea                                                         
-      │                                               2          ater       n                                                                
-      └──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-Column names: place, phase, nom, hackett_class, index_id, vasa_class, t_building, dinasty_gr, amplada_general, alcada_general, overall_m2,
-amplada_arena, alcada_arena, arena_m2, amplada_cavea, cavea_height, cavea_m2, nombre_places, pais, lat, long, elevation_m, bib, provincia_romana,
-ratio_arena, ratio_general, superficie_arena, superficie_general, superficie_cavea, perimetre_arena, perimetre_general, ratio_cavea
 
-13/32 columns shown.
+|place |phase |nom   |hackett_class |index_id |vasa_class |t_building   |dinasty_gr | amplada_general| alcada_general| overall_m2| amplada_arena| alcada_arena| arena_m2| amplada_cavea| cavea_height| cavea_m2| nombre_places|pais  |lat      |long     | elevation_m|bib                   |provincia_romana | ratio_arena| ratio_general| superficie_arena| superficie_general| superficie_cavea| perimetre_arena| perimetre_general| ratio_cavea|
+|:-----|:-----|:-----|:-------------|:--------|:----------|:------------|:----------|---------------:|--------------:|----------:|-------------:|------------:|--------:|-------------:|------------:|--------:|-------------:|:-----|:--------|:--------|-----------:|:---------------------|:----------------|-----------:|-------------:|----------------:|------------------:|----------------:|---------------:|-----------------:|-----------:|
+|carmo |NA    |CARMO |hispb#02      |#010     |hisbae#02  |amphitheater |caesarean  |           108.0|           98.0|         NA|          58.8|         38.6|       NA|            NA|           NA|     7442|         18605|spain |37469587 |-5650787 |         220|2015_jimenez          |hispania_baetica |    1.523316|      1.102041|         1782.603|           8312.654|         6530.052|        152.9956|          323.5840|   0.2144444|
+|carmo |NA    |CARMO |hispb#02      |#010     |hisbae#02  |amphitheater |caesarean  |           130.0|          111.0|         NA|          58.8|         38.6|       NA|            NA|           NA|       NA|            NA|spain |37469587 |-5650787 |         220|2014_gonzalez         |hispania_baetica |    1.523316|      1.171171|         1782.603|          11333.295|         9550.693|        152.9956|          378.5619|   0.1572890|
+|carmo |NA    |CARMO |hispb#02      |#010     |hisbae#02  |amphitheater |caesarean  |              NA|             NA|         NA|          58.8|         39.0|       NA|            NA|           NA|       NA|            NA|spain |37469587 |-5650787 |         220|2014_gonzalez         |hispania_baetica |    1.507692|            NA|         1801.075|                 NA|               NA|        153.6239|                NA|          NA|
+|carmo |NA    |CARMO |hispb#02      |#010     |hisbae#02  |amphitheater |caesarean  |           131.2|          111.4|         NA|          58.0|         39.0|       NA|            NA|           NA|       NA|            NA|spain |37469587 |-5650787 |         220|2014_golvin           |hispania_baetica |    1.487180|      1.177738|         1776.571|          11479.128|         9702.558|        152.3672|          381.0752|   0.1547653|
+|carmo |NA    |CARMO |hispb#02      |#010     |hisbae#02  |amphitheater |caesarean  |           108.0|           98.0|         NA|          58.8|         38.6|       NA|          29.6|           NA|       NA|         18350|spain |37469587 |-5650787 |         220|2011_amphitheatrum_de |hispania_baetica |    1.523316|      1.102041|         1782.603|           8312.654|         6530.052|        152.9956|          323.5840|   0.2144444|
+|carmo |NA    |CARMO |hispb#02      |#010     |hisbae#02  |amphitheater |caesarean  |           108.0|           98.0|         NA|          58.0|         39.0|       NA|          29.6|           NA|       NA|         18350|spain |37469587 |-5650787 |         220|2011_amphitheatrum_de |hispania_baetica |    1.487180|      1.102041|         1776.571|           8312.654|         6536.084|        152.3672|          323.5840|   0.2137188|
+
+
 
 ### 3. Generar una taula de resum
 
