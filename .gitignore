@@ -1,5 +1,4 @@
 .Rproj.user
-/data/01_data_golvin/*.csv
-/data/02_data_vazquez/*.csv
+*.csv
 README.Rmd
 amfiromantools_ddbb.Rproj
