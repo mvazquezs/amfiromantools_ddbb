@@ -44,32 +44,425 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
 
 ``` r
 ### Carreguem les dades de Vàzquez-Santiago
-  df_ample_vazq <- load_dimensions_vazquez(
+    load_dimensions_vazquez(
       filtrar_edifici = 'amphitheater',
       filtrar_provincia = c('hispania', 'panonia'),
-      seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib')) %>%
-    head(10)
+      seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
 ```
 
 i  Els paquets han estat carregats correctament
 i  Les dades ha estat carregat correctament
 
-``` r
-   
-
-  print(df_ample_vazq)
+```
+#> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#010", : Couldn't print whole table in max_width = 80 characters.
+#> Printing 8/10 columns.
 ```
 
-# A tibble: 10 × 10
-   index_id nom   t_building   provincia_romana pais  amplada_general amplada_arena alcada_general alcada_arena bib                  
-   <chr>    <chr> <chr>        <chr>            <chr>           <dbl>         <dbl>          <dbl>        <dbl> <chr>                
- 1 #010     CARMO amphitheater hispania_baetica spain            108           58.8            98          38.6 2015_jimenez         
- 2 #010     CARMO amphitheater hispania_baetica spain            130           58.8           111          38.6 2014_gonzalez        
- 3 #010     CARMO amphitheater hispania_baetica spain             NA           58.8            NA          39   2014_gonzalez        
- 4 #010     CARMO amphitheater hispania_baetica spain            131.          58             111.         39   2014_golvin          
- 5 #010     CARMO amphitheater hispania_baetica spain            108           58.8            98          38.6 2011_amphitheatrum_de
- 6 #010     CARMO amphitheater hispania_baetica spain            108           58              98          39   2011_amphitheatrum_de
- 7 #010     CARMO amphitheater hispania_baetica spain             90           58              NA          39   2007_welch           
- 8 #010     CARMO amphitheater hispania_baetica spain            131           58             111          39   2016_stelius         
- 9 #010     CARMO amphitheater hispania_baetica spain            131.          NA             111.         NA   2019_hackett         
-10 #010     CARMO amphitheater hispania_baetica spain             NA           NA              NA          NA   2016_sfsheath_com    
+-------------------------------------------------------------------------
+ **inde** **nom**  **t_bu** **prov** **pais** **ampl** **ampl** **alca** 
+ **x_id**          **ildi** **inci**          **ada_** **ada_** **da_g** 
+                   **ng**   **a_ro**          **gene** **aren** **ener** 
+                            **mana**           **ral**    **a**   **al** 
+--------- -------- -------- -------- -------- -------- -------- -------- 
+ #010     CARMO    amphithe hispania spain         108     58.8       98 
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain         130     58.8      111 
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain                 58.8          
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain         131       58      111 
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain         108     58.8       98 
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain         108       58       98 
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain          90       58          
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain         131       58      111 
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain         131               111 
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain                               
+                   ater     _baetica                                     
+                                                                         
+ #010     CARMO    amphithe hispania spain                   55          
+                   ater     _baetica                                     
+                                                                         
+ #011     UCUBI    amphithe hispania spain                   35          
+                   ater     _baetica                                     
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126     64.5      103 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126     64.5      103 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126               103 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126       65      103 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain                               
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain                               
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain                 64.5          
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126               103 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126       64      102 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126     64.5      103 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #077     AUGUSTA  amphithe hispania spain         126       64      102 
+          EMERITA  ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain          74     41.7     66.2 
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain          74     41.7     66.2 
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain          75       41       69 
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain                               
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain                               
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain          75              68.5 
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain          75       47       64 
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #088     SEGOBRIG amphithe hispania spain          75       40          
+          A        ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #093     EMPORIAE amphithe hispania spain          93              44.1 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #093     EMPORIAE amphithe hispania spain          93              44.1 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #093     EMPORIAE amphithe hispania spain          88       75       56 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #093     EMPORIAE amphithe hispania spain                               
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #093     EMPORIAE amphithe hispania spain                               
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #093     EMPORIAE amphithe hispania spain          88                56 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #093     EMPORIAE amphithe hispania spain          86       71       54 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #101     CONIMBRI amphithe hispania portugal       98       48       86 
+          GA       ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #101     CONIMBRI amphithe hispania portugal       94       54       80 
+          GA       ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #101     CONIMBRI amphithe hispania portugal                            
+          GA       ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #101     CONIMBRI amphithe hispania portugal       94                80 
+          GA       ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #101     CONIMBRI amphithe hispania portugal       94       54       80 
+          GA       ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #101     CONIMBRI amphithe hispania portugal       98                86 
+          GA       ater     _lusitan                                     
+                            ia                                           
+                                                                         
+ #139     TARRACO  amphithe hispania spain         130       62      102 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain         130       62      102 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain         110     61.5     86.5 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain         148     84.5      119 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain         148       84      119 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain                               
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain                               
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain         148               119 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain          95       62     69.5 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #139     TARRACO  amphithe hispania spain         130               102 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+ #175     ITALICA  amphithe hispania spain         156               134 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         153               128 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         152               128 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         153     70.6      131 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         156     71.2      134 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         157       72      134 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain                               
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain                               
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         156               134 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         160       70      136 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         160               137 
+                   ater     _baetica                                     
+                                                                         
+ #175     ITALICA  amphithe hispania spain         156               134 
+                   ater     _baetica                                     
+                                                                         
+          ASTIGI   amphithe hispania spain         133       73      106 
+                   ater     _baetica                                     
+                                                                         
+          ASTIGI   amphithe hispania spain         130     70.9      107 
+                   ater     _baetica                                     
+                                                                         
+          ASTIGI   amphithe hispania spain         130               107 
+                   ater     _baetica                                     
+                                                                         
+          BARCINO  amphithe hispania spain         117       60       93 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          BARCINO  amphithe hispania spain         117       65       93 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          BARCINO  amphithe hispania spain         117       65       93 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          BARCINO  amphithe hispania spain         117                98 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          BOBADELA amphithe hispania portugal              49.5          
+                   ater     _lusitan                                     
+                            ia                                           
+                                                                         
+          BOBADELA amphithe hispania portugal                            
+                   ater     _lusitan                                     
+                            ia                                           
+                                                                         
+          BOBADELA amphithe hispania portugal                            
+                   ater     _lusitan                                     
+                            ia                                           
+                                                                         
+          BOBADELA amphithe hispania portugal                            
+                   ater     _lusitan                                     
+                            ia                                           
+                                                                         
+          BOBADELA amphithe hispania portugal                50          
+                   ater     _lusitan                                     
+                            ia                                           
+                                                                         
+          BRACARA  amphithe hispania portugal      132              82.5 
+          AUGUSTA  ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          BRACARA  amphithe hispania portugal      132                83 
+          AUGUSTA  ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          BRACARA  amphithe hispania portugal      132              82.5 
+          AUGUSTA  ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain        96.6     56.5     77.8 
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain        96.6     56.5     77.8 
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain                               
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain                               
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain                               
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain                   69          
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain                               
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CARTHAGO amphithe hispania spain                               
+          NOVA     ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CASTULO  amphithe hispania spain                               
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          CORDUBA  amphithe hispania spain         178               154 
+                   ater     _baetica                                     
+                                                                         
+          CORDUBA  amphithe hispania spain         178       96      154 
+                   ater     _baetica                                     
+                                                                         
+          CORDUBA  amphithe hispania spain                   62          
+                   ater     _baetica                                     
+                                                                         
+          CORDUBA  amphithe hispania spain         178               147 
+                   ater     _baetica                                     
+                                                                         
+          CORDUBA  amphithe hispania spain         100                   
+                   ater     _baetica                                     
+                                                                         
+          CORDUBA  amphithe hispania spain                               
+                   ater     _baetica                                     
+                                                                         
+          CORDUBA  amphithe hispania spain         178               140 
+                   ater     _baetica                                     
+                                                                         
+          CORDUBA  amphithe hispania spain         178               140 
+                   ater     _baetica                                     
+                                                                         
+          EBORA    amphithe hispania portugal       80       45       65 
+                   ater     _lusitan                                     
+                            ia                                           
+                                                                         
+          EBORA    amphithe hispania portugal       80                65 
+                   ater     _lusitan                                     
+                            ia                                           
+                                                                         
+          FLAVIUM  amphithe hispania spain                               
+          CAPARENS ater     _lusitan                                     
+          E                 ia                                           
+                                                                         
+          FLAVIUM  amphithe hispania spain          69                51 
+          CAPARENS ater     _lusitan                                     
+          E                 ia                                           
+                                                                         
+          GADES    amphithe hispania spain                               
+                   ater     _baetica                                     
+                                                                         
+          HISPALIS amphithe hispania spain                               
+                   ater     _baetica                                     
+                                                                         
+          IULIA    amphithe hispania spain          72                65 
+          UGULTUNI ater     _baetica                                     
+          A                                                              
+                                                                         
+          IULIA    amphithe hispania spain                   69          
+          VIRTUS   ater     _baetica                                     
+                                                                         
+          LEGIO    amphithe hispania spain          90       60       70 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          LEGIO    amphithe hispania spain          90                70 
+                   ater     _tarraco                                     
+                            nensis                                       
+                                                                         
+          SISAPO   amphithe hispania spain                   65          
+                   ater     _baetica                                     
+                                                                         
+          VERGIS   amphithe hispania spain                               
+                   ater     _baetica                                     
+-------------------------------------------------------------------------
+
+
