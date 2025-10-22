@@ -10,7 +10,7 @@
 
 **Projecte `devtools` per a la càrrega, gestió i anàlisi de dades d'amfiteatres romans.**
 
-`amfiromantools_ddbb` és un paquet de R dissenyat per facilitar el treball amb dades d'amfiteatres romans. Proporciona un conjunt d'eines per automatitzar tasques comunes com la càrrega de dades, la generació de resums estadístics, la imputació de valors perduts i la realització d'anàlisis estadístiques.
+`amphidata` és un paquet de R dissenyat per facilitar el treball amb dades d'amfiteatres romans. Proporciona un conjunt d'eines per automatitzar tasques comunes com la càrrega de dades, la generació de resums estadístics, la imputació de valors perduts i la realització d'anàlisis estadístiques.
 
 ## Instal·lació
 
@@ -19,7 +19,7 @@ Podeu instal·lar la versió de desenvolupament des de GitHub amb:
 
 ``` r
 
-if (!require('devtools') install.packages('devtools'))
+if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools")
 devtools::install_github('mvazquezs/amphidata')
 
 ```
@@ -55,11 +55,7 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
   df_ori_88 <- load_dimensions_golvin(
     filtrar_provincia = c('hispania', 'panonia'),
     seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
-```
-
-i  Les dades han estat carregades correctament
-
-``` r
+#> i  Les dades han estat carregades correctament
 
 
   head(df_ori_88, 5) 
@@ -102,11 +98,7 @@ i  Les dades han estat carregades correctament
     filtrar_edifici = 'amphitheater',
     filtrar_provincia = c('hispania', 'panonia'),
     seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
-```
-
-i  Les dades han estat carregades correctament
-
-``` r
+#> i  Les dades han estat carregades correctament
 
   head(df_ori, 5)
 #> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#010", : Couldn't print whole table in max_width = 80 characters.

@@ -5,13 +5,14 @@ knitr::opts_chunk$set(
   tidy = FALSE,
   width = 120,
   collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%")
+  comment = '#>',
+  fig.path = 'man/figures/README-',
+  out.width = '100%')
 
 # Assegura que les taules es mostrin correctament en format Markdown
 options(knitr.kable.NA = '')
-options(huxtable.knitr_output_format = "md") 
+options(huxtable.knitr_output_format = 'md')
+
 ```
 
 # amphidata <a href="https://amphidata.r-lib.org/"><img src="man/figures/amphi_logo.png" align = "right" height = "400" alt=""/></a>
@@ -22,7 +23,7 @@ options(huxtable.knitr_output_format = "md")
 
 **Projecte `devtools` per a la càrrega, gestió i anàlisi de dades d'amfiteatres romans.**
 
-`amfiromantools_ddbb` és un paquet de R dissenyat per facilitar el treball amb dades d'amfiteatres romans. Proporciona un conjunt d'eines per automatitzar tasques comunes com la càrrega de dades, la generació de resums estadístics, la imputació de valors perduts i la realització d'anàlisis estadístiques.
+`amphidata` és un paquet de R dissenyat per facilitar el treball amb dades d'amfiteatres romans. Proporciona un conjunt d'eines per automatitzar tasques comunes com la càrrega de dades, la generació de resums estadístics, la imputació de valors perduts i la realització d'anàlisis estadístiques.
 
 ## Instal·lació
 
@@ -30,7 +31,7 @@ Podeu instal·lar la versió de desenvolupament des de GitHub amb:
 
 ```{r, eval = FALSE}
 
-if (!require('devtools') install.packages('devtools'))
+if (!requireNamespace("devtools", quietly = TRUE)) install.packages("devtools")
 devtools::install_github('mvazquezs/amphidata')
 
 ```
@@ -58,7 +59,7 @@ Primer, carreguem el paquet. Les funcions `amphi_setup_dirs()` i `amphi_load_pac
 
 El paquet inclou funcions per carregar conjunts de dades estandarditzats.
 
-```{r load_data_gol, results = 'asis'}
+```{r load_data_gol}
 
 ### Carreguem les dades de Vàzquez-Santiago
   df_ori_88 <- load_dimensions_golvin(
@@ -70,7 +71,7 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
 
 ```
 
-```{r load_data_vaz, results = 'asis'}
+```{r load_data_vaz}
 
 ### Carreguem les dades de Vàzquez-Santiago
   df_ori <- load_dimensions_vazquez(
