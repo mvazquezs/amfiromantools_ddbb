@@ -9,7 +9,7 @@ output:
 
 
 
-# amphidata <a href="https://amphidata.r-lib.org/"><img src="man/figures/amphi_logo.png" align="right" alt=""/></a>
+# amphidata <a href="https://amphidata.r-lib.org/"><img src="man/figures/amphi_logo.png" align="right" height="100" alt=""/></a>
 
 <!-- badges: start -->
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
@@ -65,35 +65,21 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
 #> [1m[34mi[39m[22m [30m Les dades han estat carregades correctament
 #> [39m
 
-  head(df_ori_88, 5) 
-#> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#011", : Couldn't print whole table in max_width = 80 characters.
-#> Printing 8/9 columns.
+  knitr::kable(df_ori_88)
 ```
 
--------------------------------------------------------------------------
- **inde** **nom**  **prov** **pais** **ampl** **ampl** **alca** **alca** 
- **x_id**          **inci**          **ada_** **ada_** **da_a** **da_g** 
-                   **a_ro**          **aren** **gene** **rena** **ener** 
-                   **mana**             **a**  **ral**            **al** 
---------- -------- -------- -------- -------- -------- -------- -------- 
- #010     CARMO    hispania spain        58.8      131               111 
-                   _baetica                                              
-                                                                         
- #011     UCUBI    hispania spain          35                            
-                   _baetica                                              
-                                                                         
- #077     EMERITA  hispania spain        64.5      126     41.2      103 
-          AUGUSTA  _lusitan                                              
-                   ia                                                    
-                                                                         
- #088     SEGOBRIG hispania spain        40.5       75       34     68.5 
-          A        _tarraco                                              
-                   nensis                                                
-                                                                         
- #093     EMPORIAE hispania spain          75       88       43       56 
-                   _tarraco                                              
-                   nensis                                                
--------------------------------------------------------------------------
+
+
+|index_id |nom             |provincia_romana       |pais     | amplada_arena| amplada_general| alcada_arena| alcada_general|bib         |
+|:--------|:---------------|:----------------------|:--------|-------------:|---------------:|------------:|--------------:|:-----------|
+|#010     |CARMO           |hispania_baetica       |spain    |          58.8|           131.2|             |          111.4|1988_golvin |
+|#011     |UCUBI           |hispania_baetica       |spain    |          35.0|                |             |               |1988_golvin |
+|#077     |EMERITA AUGUSTA |hispania_lusitania     |spain    |          64.5|           126.3|         41.2|          102.6|1988_golvin |
+|#088     |SEGOBRIGA       |hispania_tarraconensis |spain    |          40.5|            75.0|         34.0|           68.5|1988_golvin |
+|#093     |EMPORIAE        |hispania_tarraconensis |spain    |          75.0|            88.0|         43.0|           56.0|1988_golvin |
+|#101     |CONIMBRIGA      |hispania_lusitania     |portugal |          54.0|            94.0|         40.0|           80.0|1988_golvin |
+|#139     |TARRACO         |hispania_tarraconensis |spain    |          84.4|           148.1|         55.2|          118.9|1988_golvin |
+|#175     |ITALICA         |hispania_baetica       |spain    |          71.5|           156.5|         49.0|          134.0|1988_golvin |
 
 
 
