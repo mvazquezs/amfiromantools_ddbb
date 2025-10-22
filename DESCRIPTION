@@ -1,19 +1,20 @@
 Package: amphidata
 Title: Eines per a la Gestió i Anàlisi de Dades d'Amfiteatres Romans
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: 
     person(given = "Miquel",
            family = "Vazquez-Santiago",
-           email = "vazquez.miquel@gmail.com", # Reemplaça amb l'email real
+           email = "vazquez.miquel@gmail.com",
            role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-9432-4297")) # Opcional: afegeix el teu ORCID
+           comment = c(ORCID = "0000-0002-9432-4297"))
 Description: Un paquet de R que proporciona un conjunt d'eines per facilitar el treball amb dades d'amfiteatres romans. Inclou funcions per a la càrrega de dades, generació de resums estadístics, imputació de valors perduts i realització d'anàlisis estadístiques.
 License: Apache License (>= 2) + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
-URL: https://github.com/mvazquezs/amphidata # Reemplaça si la URL és diferent
-BugReports: https://github.com/mvazquezs/amphidata/issues # Reemplaça si la URL és diferent
+Depends: R (>= 4.0.0)
+URL: https://github.com/mvazquezs/amphidata
+BugReports: https://github.com/mvazquezs/amphidata/issues
 Imports: 
     data.table,
     dplyr,
@@ -32,4 +33,6 @@ Imports:
     tidyr
 Suggests: 
     devtools,
-    usethis
+    usethis,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
