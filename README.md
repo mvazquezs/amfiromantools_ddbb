@@ -1,16 +1,22 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+---
+output:
+  github_document:
+    html_preview: false
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
 
-# amphidata <a href="https://amphidata.r-lib.org/"><img src="man/figures/amphi_logo.png" align = "right" height = "400" alt=""/></a>
+# amphidata <a href="https://amphidata.r-lib.org/"><img src="man/figures/amphi_logo.png" align="right" alt=""/></a>
 
 <!-- badges: start -->
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 <!-- badges: end -->
 
-**Projecte `devtools` per a la càrrega, gestió i anàlisi de dades d'amfiteatres romans.**
-
-`amphidata` és un paquet de R dissenyat per facilitar el treball amb dades d'amfiteatres romans. Proporciona un conjunt d'eines per automatitzar tasques comunes com la càrrega de dades, la generació de resums estadístics, la imputació de valors perduts i la realització d'anàlisis estadístiques.
+## Prefaci
+El projecte `amphidata` permet la càrrega, gestió i anàlisi de dades d'amfiteatres romans. Proporciona un conjunt d'eines per automatitzar tasques comunes com la càrrega de dades, la generació de resums estadístics, la imputació de valors perduts i la realització d'anàlisis estadístiques.
 
 ## Instal·lació
 
@@ -41,7 +47,8 @@ Primer, carreguem el paquet. Les funcions `amphi_setup_dirs()` i `amphi_load_pac
 ### Càrrega de paquets necessaris
   amphi_load_packages(
     update_packages = FALSE)
-#> i  Els paquets han estat carregats correctament
+#> [1m[34mi[39m[22m [30m Els paquets han estat carregats correctament
+#> [39m
 ```
 
 ### 2. Càrrega de dades
@@ -55,7 +62,8 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
   df_ori_88 <- load_dimensions_golvin(
     filtrar_provincia = c('hispania', 'panonia'),
     seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
-#> i  Les dades han estat carregades correctament
+#> [1m[34mi[39m[22m [30m Les dades han estat carregades correctament
+#> [39m
 
   head(df_ori_88, 5) 
 #> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#011", : Couldn't print whole table in max_width = 80 characters.
@@ -97,7 +105,8 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
     filtrar_edifici = 'amphitheater',
     filtrar_provincia = c('hispania', 'panonia'),
     seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
-#> i  Les dades han estat carregades correctament
+#> [1m[34mi[39m[22m [30m Les dades han estat carregades correctament
+#> [39m
 
   knitr::kable(head(df_ori, 5))
 ```
