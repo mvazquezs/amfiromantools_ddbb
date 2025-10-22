@@ -57,7 +57,6 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
     seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
 #> i  Les dades han estat carregades correctament
 
-
   head(df_ori_88, 5) 
 #> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#011", : Couldn't print whole table in max_width = 80 characters.
 #> Printing 8/9 columns.
@@ -100,31 +99,17 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
     seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
 #> i  Les dades han estat carregades correctament
 
-  head(df_ori, 5)
-#> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#010", : Couldn't print whole table in max_width = 80 characters.
-#> Printing 8/10 columns.
+  knitr::kable(head(df_ori, 5))
 ```
 
-------------------------------------------------------------------------
- **inde** **nom** **t_bu** **prov** **pais** **ampl** **ampl** **alca** 
- **x_id**         **ildi** **inci**          **ada_** **ada_** **da_g** 
-                  **ng**   **a_ro**          **gene** **aren** **ener** 
-                           **mana**           **ral**    **a**   **al** 
---------- ------- -------- -------- -------- -------- -------- -------- 
- #010     CARMO   amphithe hispania spain         108     58.8       98 
-                  ater     _baetica                                     
-                                                                        
- #010     CARMO   amphithe hispania spain         130     58.8      111 
-                  ater     _baetica                                     
-                                                                        
- #010     CARMO   amphithe hispania spain                 58.8          
-                  ater     _baetica                                     
-                                                                        
- #010     CARMO   amphithe hispania spain         131       58      111 
-                  ater     _baetica                                     
-                                                                        
- #010     CARMO   amphithe hispania spain         108     58.8       98 
-                  ater     _baetica                                     
-------------------------------------------------------------------------
+
+
+|index_id |nom   |t_building   |provincia_romana |pais  | amplada_general| amplada_arena| alcada_general| alcada_arena|bib                   |
+|:--------|:-----|:------------|:----------------|:-----|---------------:|-------------:|--------------:|------------:|:---------------------|
+|#010     |CARMO |amphitheater |hispania_baetica |spain |           108.0|          58.8|           98.0|         38.6|2015_jimenez          |
+|#010     |CARMO |amphitheater |hispania_baetica |spain |           130.0|          58.8|          111.0|         38.6|2014_gonzalez         |
+|#010     |CARMO |amphitheater |hispania_baetica |spain |                |          58.8|               |         39.0|2014_gonzalez         |
+|#010     |CARMO |amphitheater |hispania_baetica |spain |           131.2|          58.0|          111.4|         39.0|2014_golvin           |
+|#010     |CARMO |amphitheater |hispania_baetica |spain |           108.0|          58.8|           98.0|         38.6|2011_amphitheatrum_de |
 
 
