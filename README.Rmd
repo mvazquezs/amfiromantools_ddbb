@@ -1,6 +1,18 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  tidy = FALSE,
+  width = 120,
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%")
 
+# Assegura que les taules es mostrin correctament en format Markdown
+options(knitr.kable.NA = '')
+options(huxtable.knitr_output_format = "md") 
+```
 
 # amphidata <a href="https://amphidata.r-lib.org/"><img src="man/figures/amphi_logo.png" align = "right" height = "400" alt=""/></a>
 
@@ -16,8 +28,7 @@
 
 Podeu instal·lar la versió de desenvolupament des de GitHub amb:
 
-
-``` r
+```{r, eval = FALSE}
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github("mvazquezs/amfiromantools_ddbb")
 ```
@@ -30,40 +41,35 @@ A continuació es mostren alguns exemples de com utilitzar les funcions principa
 
 Primer, carreguem el paquet. Les funcions `amphi_setup_dirs()` i `amphi_load_packages()` són útils per configurar l'entorn, però no són necessàries per a l'ús bàsic del paquet un cop instal·lat.
 
-
-``` r
+```{r setup}
 
 ### Càrrega de paquet
   library(amfiromantools_ddbb)
-#> Error in library(amfiromantools_ddbb): no hi ha cap paquet anomenat 'amfiromantools_ddbb'
 
 ### Càrrega de paquets necessaris
   amphi_load_packages(
     update_packages = FALSE)
-#> i  Els paquets han estat carregats correctament
+
 ```
 
 ### 2. Càrrega de dades
 
 El paquet inclou funcions per carregar conjunts de dades estandarditzats.
 
-
-``` r
+```{r load_data_gol, results = 'asis'}
 ### Carreguem les dades de Vàzquez-Santiago
   df_ori_88 <- load_dimensions_golvin(
       filtrar_edifici = 'amphitheater',
       filtrar_provincia = c('hispania', 'panonia'),
       seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
-#> Error in load_dimensions_golvin(filtrar_edifici = "amphitheater", filtrar_provincia = c("hispania", : unused argument (filtrar_edifici = "amphitheater")
+
 ```
 
-
-``` r
+```{r load_data_vaz, results = 'asis'}
 ### Carreguem les dades de Vàzquez-Santiago
   df_ori <- load_dimensions_vazquez(
       filtrar_edifici = 'amphitheater',
       filtrar_provincia = c('hispania', 'panonia'),
       seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
-```
 
-i  Les dades han estat carregades correctament
+```

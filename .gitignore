@@ -1,5 +1,8 @@
 .Rproj.user
 *.csv
-README.Rmd
-amphidata.Rproj
 *.pdf
+.RData
+.Rhistory
+
+amphidata.Rproj
+sysdata.rda

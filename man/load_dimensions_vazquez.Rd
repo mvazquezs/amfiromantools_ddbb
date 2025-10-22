@@ -9,8 +9,8 @@ load_dimensions_vazquez(
   filtrar_edifici = NULL,
   filtrar_provincia = NULL,
   filtrar_pais = NULL,
-  retornar_originals = FALSE,
-  format_llarg = FALSE
+  format_llarg = FALSE,
+  retornar_originals = FALSE
 )
 }
 \arguments{
@@ -22,12 +22,10 @@ load_dimensions_vazquez(
 
 \item{filtrar_pais}{Lògic. Accepta noms de païssos moderns en anglès.}
 
-\item{retornar_originals}{Lògic. Si és TRUE, retorna una llista amb els conjunts de dades orginals i el fusionat. Si és FALSE, retorna només el conjunt de dades fusionat.}
-
 \item{format_llarg}{Lògic. Si és TRUE, el dataframe de sortida es retorna en format llarg (pivotat).}
 }
 \value{
-Un dataframe de R (o una llista de dataframes) amb les dades fusionades i estructurades dels amfiteatres romans i republicans.
+Un dataframe de R amb les dades fusionades i estructurades dels amfiteatres romans i republicans.
 }
 \description{
 Aquesta funció cerca arxius de dades d'amfiteatres amb un patró específic
@@ -59,8 +57,7 @@ df_hispania_sel <- load_dimensions_vazquez(
  filtrar_edifici = 'amphitheater',
  filtrar_provincia = 'hispania',
  filtrar_pais = NULL,
- seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'),
- retornar_originals = FALSE)
+ seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
 
 # Carregar i pivotar les dades a format llarg
 df_llarg <- load_dimensions_vazquez(format_llarg = TRUE)

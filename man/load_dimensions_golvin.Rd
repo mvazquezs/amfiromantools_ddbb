@@ -8,7 +8,6 @@ load_dimensions_golvin(
   filtrar_provincia = NULL,
   filtrar_pais = NULL,
   seleccionar_columnes = NULL,
-  retornar_originals = FALSE,
   format_llarg = FALSE
 )
 }
@@ -19,12 +18,10 @@ load_dimensions_golvin(
 
 \item{seleccionar_columnes}{Selecciona les columnes desitjades per la sortida del dataframe.}
 
-\item{retornar_originals}{Lògic. Si és TRUE, retorna una llista amb els conjunts de dades originals i el fusionat. Si és FALSE, retorna només el conjunt de dades fusionat.}
-
 \item{format_llarg}{Lògic. Si és TRUE, el dataframe de sortida es retorna en format llarg (pivotat).}
 }
 \value{
-Un \code{tibble} (o una llista de \code{tibbles}) amb les dades fusionades i estructurades.
+Un \code{tibble} amb les dades fusionades i estructurades.
 }
 \description{
 Aquesta funció processa dades d'amfiteatres romans i republicans extretes de taules,
@@ -46,14 +43,12 @@ df_complet <- load_dimensions_golvin()
 # Carregar dades filtrant per província i seleccionant columnes
 df_hispania <- load_dimensions_golvin(
   filtrar_provincia = 'hispania',
-  seleccionar_columnes = c(nom, pais, amplada_general, alcada_general)
-)
+  seleccionar_columnes = c(nom, pais, amplada_general, alcada_general))
 
 # Carregar dades en format llarg
 df_llarg <- load_dimensions_golvin(
   seleccionar_columnes = c(amplada_arena, alcada_arena),
-  format_llarg = TRUE
-)
+  format_llarg = TRUE)
 
 }
 \seealso{
