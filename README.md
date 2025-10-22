@@ -18,8 +18,10 @@ Podeu instal·lar la versió de desenvolupament des de GitHub amb:
 
 
 ``` r
-if (!require("devtools")) install.packages("devtools")
-devtools::install_github("mvazquezs/amfiromantools_ddbb")
+
+if (!require('devtools') install.packages('devtools'))
+devtools::install_github('mvazquezs/amphidata')
+
 ```
 
 ## Ús
@@ -34,8 +36,7 @@ Primer, carreguem el paquet. Les funcions `amphi_setup_dirs()` i `amphi_load_pac
 ``` r
 
 ### Càrrega de paquet
-  library(amfiromantools_ddbb)
-#> Error in library(amfiromantools_ddbb): no hi ha cap paquet anomenat 'amfiromantools_ddbb'
+  library('amphidata')
 
 ### Càrrega de paquets necessaris
   amphi_load_packages(
@@ -49,21 +50,89 @@ El paquet inclou funcions per carregar conjunts de dades estandarditzats.
 
 
 ``` r
+
 ### Carreguem les dades de Vàzquez-Santiago
   df_ori_88 <- load_dimensions_golvin(
-      filtrar_edifici = 'amphitheater',
-      filtrar_provincia = c('hispania', 'panonia'),
-      seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
-#> Error in load_dimensions_golvin(filtrar_edifici = "amphitheater", filtrar_provincia = c("hispania", : unused argument (filtrar_edifici = "amphitheater")
-```
-
-
-``` r
-### Carreguem les dades de Vàzquez-Santiago
-  df_ori <- load_dimensions_vazquez(
-      filtrar_edifici = 'amphitheater',
-      filtrar_provincia = c('hispania', 'panonia'),
-      seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
+    filtrar_provincia = c('hispania', 'panonia'),
+    seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
 ```
 
 i  Les dades han estat carregades correctament
+
+``` r
+
+
+  head(df_ori_88, 5) 
+#> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#011", : Couldn't print whole table in max_width = 80 characters.
+#> Printing 8/9 columns.
+```
+
+-------------------------------------------------------------------------
+ **inde** **nom**  **prov** **pais** **ampl** **ampl** **alca** **alca** 
+ **x_id**          **inci**          **ada_** **ada_** **da_a** **da_g** 
+                   **a_ro**          **aren** **gene** **rena** **ener** 
+                   **mana**             **a**  **ral**            **al** 
+--------- -------- -------- -------- -------- -------- -------- -------- 
+ #010     CARMO    hispania spain        58.8      131               111 
+                   _baetica                                              
+                                                                         
+ #011     UCUBI    hispania spain          35                            
+                   _baetica                                              
+                                                                         
+ #077     EMERITA  hispania spain        64.5      126     41.2      103 
+          AUGUSTA  _lusitan                                              
+                   ia                                                    
+                                                                         
+ #088     SEGOBRIG hispania spain        40.5       75       34     68.5 
+          A        _tarraco                                              
+                   nensis                                                
+                                                                         
+ #093     EMPORIAE hispania spain          75       88       43       56 
+                   _tarraco                                              
+                   nensis                                                
+-------------------------------------------------------------------------
+
+
+
+
+``` r
+
+### Carreguem les dades de Vàzquez-Santiago
+  df_ori <- load_dimensions_vazquez(
+    filtrar_edifici = 'amphitheater',
+    filtrar_provincia = c('hispania', 'panonia'),
+    seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
+```
+
+i  Les dades han estat carregades correctament
+
+``` r
+
+  head(df_ori, 5)
+#> Warning in to_md(structure(list(index_id = c("index_id", "#010", "#010", : Couldn't print whole table in max_width = 80 characters.
+#> Printing 8/10 columns.
+```
+
+------------------------------------------------------------------------
+ **inde** **nom** **t_bu** **prov** **pais** **ampl** **ampl** **alca** 
+ **x_id**         **ildi** **inci**          **ada_** **ada_** **da_g** 
+                  **ng**   **a_ro**          **gene** **aren** **ener** 
+                           **mana**           **ral**    **a**   **al** 
+--------- ------- -------- -------- -------- -------- -------- -------- 
+ #010     CARMO   amphithe hispania spain         108     58.8       98 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         130     58.8      111 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain                 58.8          
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         131       58      111 
+                  ater     _baetica                                     
+                                                                        
+ #010     CARMO   amphithe hispania spain         108     58.8       98 
+                  ater     _baetica                                     
+------------------------------------------------------------------------
+
+
