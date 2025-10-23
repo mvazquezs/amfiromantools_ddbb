@@ -1,8 +1,5 @@
-.Rproj.user
-*.csv
-*.pdf
-.RData
-.Rhistory
+# Ignore R project user-specific files
+.Rproj.user/
 
-amphidata.Rproj
-sysdata.rda
+# Ignore CSV files
+*.csv

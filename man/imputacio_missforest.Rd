@@ -7,8 +7,8 @@
 imputacio_missforest(
   df,
   seleccio_variables,
-  grup_by,
-  grup_by_reserva,
+  grup_by = NULL,
+  grup_by_reserva = NULL,
   optim_mtry = FALSE,
   ntree = 100,
   maxiter = 10,
@@ -40,6 +40,12 @@ imputacio_missforest(
 \item{report_imputacio}{Retorna un report de la imputació? (default: TRUE).}
 
 \item{retornar_original}{Retorna el data frame original juntament amb l'imputat? (default: FALSE).}
+
+\item{df_miss}{Data frame amb les dades a imputar.}
+
+\item{optim}{Booleà per activar o desactivar l'optimització de \code{mtry}.}
+
+\item{...}{Altres paràmetres per a \code{missForest::missForest}.}
 }
 \value{
 Una llista que conté:
@@ -48,11 +54,31 @@ Una llista que conté:
 \item \code{original_df}: (Opcional) El data frame original.
 \item \code{report}: (Opcional) Una llista amb un resum i el detall de la imputació.
 }
+
+Un objecte de classe \code{missForest}.
 }
 \description{
 Aquesta funció realitza una imputació de valors perduts utilitzant l'algorisme
 \code{missForest}. Permet l'optimització de paràmetres i l'agrupació de dades.
 Genera columnes de "flags" per a cada variable imputada.
+
+Envolta la funció \code{missForest::missForest} per gestionar l'optimització
+opcional de \code{mtry}.
+}
+\details{
+\code{missForest} és un mètode d'imputació no paramètric que utilitza l'algorisme de Random Forest
+per predir i imputar valors perduts. És especialment potent per a conjunts de dades amb
+tipus de variables mixtes (numèriques i categòriques), relacions no lineals i interaccions complexes.
+L'algorisme funciona de manera iterativa: inicialment, omple els valors perduts amb la mitjana o la moda.
+Després, per a cada variable amb valors perduts, entrena un model de Random Forest utilitzant les
+altres variables com a predictors i prediu els valors que falten. Aquest procés es repeteix
+fins que s'assoleix un criteri de parada.
+
+La funció implementa una estratègia de fallback per a la imputació. Si la imputació per al
+grup principal (\code{grup_by}) es considera poc fiable (actualment, si el grup té menys de 3 observacions),
+la funció intentarà imputar aquests valors utilitzant el grup de reserva (\code{grup_by_reserva}).
+Això assegura que els grups petits, on \code{missForest} podria ser inestable, es gestionin amb
+una estratègia d'agrupació més àmplia.
 }
 \examples{
 # Crear un data frame d'exemple amb NAs
@@ -74,4 +100,13 @@ resultat_miss_agrupat <- imputacio_missforest(
   seleccio_variables = c(valor1, valor2),
   grup_by = grup
 )
+
 }
+\seealso{
+Stekhoven, D.J. (2022). missForest: Nonparametric Missing Value Imputation using Random Forest. R package version 1.5, https://cran.r-project.org/web/packages/missForest/vignettes/missForest_1.5.pdf
+
+Stekhoven, D. J., & Bühlmann, P. (2012). MissForest—non-parametric missing value imputation for mixed-type data. Bioinformatics, 28(1), 112-118.
+
+Documentació addicional i exemples: https://rpubs.com/lmorgan95/MissForest, https://www.r-bloggers.com/2023/01/imputation-in-r-top-3-ways-for-imputing-missing-data/
+}
+\keyword{internal}

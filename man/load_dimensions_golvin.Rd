@@ -37,18 +37,24 @@ La funció realitza els següents passos:
 }
 }
 \examples{
-# Carregar totes les dades
-df_complet <- load_dimensions_golvin()
+\dontrun{
+# Carregar totes les dades de Golvin
+df_golvin_complet <- load_dimensions_golvin()
 
-# Carregar dades filtrant per província i seleccionant columnes
-df_hispania <- load_dimensions_golvin(
+# Carregar dades de Golvin filtrant per província
+df_golvin_hispania <- load_dimensions_golvin(
+  filtrar_provincia = 'hispania')
+
+# Carregar dades de Golvin seleccionant columnes
+df_golvin_seleccionat <- load_dimensions_golvin(
   filtrar_provincia = 'hispania',
   seleccionar_columnes = c(nom, pais, amplada_general, alcada_general))
 
-# Carregar dades en format llarg
-df_llarg <- load_dimensions_golvin(
+# Carregar dades de Golvin en format llarg
+df_golvin_llarg <- load_dimensions_golvin(
   seleccionar_columnes = c(amplada_arena, alcada_arena),
   format_llarg = TRUE)
+}
 
 }
 \seealso{

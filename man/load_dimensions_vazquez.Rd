@@ -45,22 +45,21 @@ La funció realitza els següents passos:
 }
 \examples{
 \dontrun{
-# Carregar i fusionar tots els dataframes
-df_complet <- load_dimensions_vazquez()
+# Carregar totes les dades de Vazquez
+df_vazquez_complet <- load_dimensions_vazquez()
 
-# Carregar i filtrar per tipus d'edifici específic
-df_filtrat <- load_dimensions_vazquez(
+# Carregar dades de Vazquez filtrant per tipus d'edifici
+df_vazquez_filtrat <- load_dimensions_vazquez(
  filtrar_edifici = 'amphitheater')
 
-# Carregar i seleccionar columnes específiques
-df_hispania_sel <- load_dimensions_vazquez(
+# Carregar dades de Vazquez seleccionant columnes
+df_vazquez_seleccionat <- load_dimensions_vazquez(
  filtrar_edifici = 'amphitheater',
  filtrar_provincia = 'hispania',
- filtrar_pais = NULL,
  seleccionar_columnes = c(contains('amplada'), contains('alcada'), -contains('cavea'), 'bib'))
 
-# Carregar i pivotar les dades a format llarg
-df_llarg <- load_dimensions_vazquez(format_llarg = TRUE)
+# Carregar dades de Vazquez en format llarg
+df_vazquez_llarg <- load_dimensions_vazquez(format_llarg = TRUE)
 }
 
 }
