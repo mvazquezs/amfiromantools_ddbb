@@ -22,12 +22,12 @@
 #' @details
 #' Les aproximacions de perímetre disponibles són:
 #' \itemize{
-#'   \item \strong{simple ($P_1$):} $P_1 = \pi (a + b)$ (per a semieixos)
-#'   \item \strong{quadratica ($P_Q$):} $P_Q = 2 \pi \sqrt{(a^2 + b^2)/2}$
-#'   \item \strong{ramanujan\_i ($P_{RI}$):} $P_{RI} = \pi [3(a+b) - \sqrt{(3a+b)(a+3b)}]$
-#'   \item \strong{ramanujan\_ii ($P_{RII}$):} $P_{RII} \approx \pi (a+b) ( 1 + \frac{3h}{10 + \sqrt{4-3h}} )$
+#'   \item \strong{simple ($P_1$):} \eqn{P_1 = \pi (a + b)} (per a semieixos)
+#'   \item \strong{quadratica ($P_Q$):} \eqn{P_Q = 2 \pi \sqrt{(a^2 + b^2)/2}}
+#'   \item \strong{ramanujan_i ($P_{RI}$):} \eqn{P_{RI} = \pi [3(a+b) - \sqrt{(3a+b)(a+3b)}]}
+#'   \item \strong{ramanujan_ii ($P_{RII}$):} \eqn{P_{RII} \approx \pi (a+b) ( 1 + \frac{3h}{10 + \sqrt{4-3h}} )}
 #' }
-#' L'\strong{Àrea} calculada és: $A = \pi \cdot \frac{a}{2} \cdot \frac{b}{2}$
+#' L'\strong{Àrea} calculada és: \eqn{A = \pi \cdot \frac{a}{2} \cdot \frac{b}{2}}
 #'
 #' @return El data frame d'entrada (`df`) amb les noves columnes de mètriques calculades.
 #'
@@ -51,8 +51,9 @@
 #' )
 #' print(df_result)
 #'
+#' @rdname elipsoide_metrics
 #' @export
-calculate_amphitheater_metrics <- function(
+elipsoide_metrics <- function(
   df, 
   major_a, 
   major_b, 

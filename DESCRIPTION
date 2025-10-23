@@ -7,32 +7,27 @@ Authors@R:
            email = "vazquez.miquel@gmail.com",
            role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-9432-4297"))
-Description: Un paquet de R que proporciona un conjunt d'eines per facilitar el treball amb dades d'amfiteatres romans. Inclou funcions per a la càrrega de dades, generació de resums estadístics, imputació de valors perduts i realització d'anàlisis estadístiques.
+Description: Un paquet de R que proporciona un conjunt d'eines per facilitar el treball amb dades d'amfiteatres romans. Inclou funcions per a la càrrega, resum, imputació de valors perduts, càlcul de paràmetres d'el·lipsoides i realització d'anàlisis estadístiques.
 License: Apache License (>= 2) + file LICENSE
 Encoding: UTF-8
+Language: ca
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3
+NeedsCompilation: no
 Depends: R (>= 4.0.0)
 URL: https://github.com/mvazquezs/amphidata
 BugReports: https://github.com/mvazquezs/amphidata/issues
-Imports: 
-    data.table,
-    dplyr,
-    e1071,
-    janitor,
-    magrittr,
-    pacman,
-    readxl,
-    rlang, 
-    stringr,
-    tibble,
-    crayon,
-    missForest,
-    psych,
-    purrr,
-    tidyr
-Suggests: 
-    devtools,
-    usethis,
-    testthat (>= 3.0.0)
+Imports: data.table (>= 1.17.8), dplyr (>= 1.1.4), e1071 (>= 1.7-16), janitor (>= 2.2.1), magrittr (>= 2.0.4), pacman (>= 0.5.1), readxl (>= 1.4.5), rlang (>= 1.1.6), stringr (>= 1.5.2), tibble (>= 3.3.0), crayon (>= 1.5.3), missForest (>= 1.5), psych (>= 2.5.6), purrr (>= 1.1.0), tidyr (>= 1.3.1)
+Suggests: devtools, usethis, testthat (>= 3.0.0)
+Collate:
+    '00_setup.R'
+    '00_dimensions_amfiteatres_golvin.R'
+    '00_dimensions_amfiteatres_vazquez.R'
+    '01_data_load.R'
+    '02_tab_elipsoide.R'
+    '02_tab_summary.R'
+    '03_imputacio_estadistics.R'
+    '03_imputacio_missforest.R'
+    '04_stats_tests.R'
+    '05_funcions_accessories.R'
 Config/testthat/edition: 3

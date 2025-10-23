@@ -1,5 +1,23 @@
+# R
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.Rproj.user
+.Rbuildignore
+.gitignore
+
+# macOS
+.DS_Store
+
+# Build files
+/man/figures/amphi_logo.png
+
 # Ignore R project user-specific files
 .Rproj.user/
 
 # Ignore CSV files
 *.csv
+
+# Ignore PDF files
+*.pdf
