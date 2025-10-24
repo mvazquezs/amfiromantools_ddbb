@@ -151,14 +151,14 @@ if (!dir.exists(l_dir)) {
         dplyr::rename(!!!cols, pais = mod_country) %>%
         dplyr::mutate(
           provincia_romana = name, # Utilitza el nom de la llista aquí
-          ratio_arena = .data$amplada_arena / .data$alcada_arena,
-          ratio_general = .data$amplada_general / .data$alcada_general,
-          superficie_arena = (.data$amplada_arena / 2) * (.data$alcada_arena / 2) * pi,
-          superficie_general = (.data$amplada_general / 2) * (.data$alcada_general / 2) * pi,
-          superficie_cavea = .data$superficie_general - .data$superficie_arena,
-          perimetre_arena = pi * (.data$amplada_arena / 2 + .data$alcada_arena / 2),
-          perimetre_general = pi * (.data$amplada_general / 2 + .data$alcada_general / 2),
-          ratio_cavea = .data$superficie_arena / .data$superficie_general) %>%
+          ratio_arena = amplada_arena / alcada_arena,
+          ratio_general = amplada_general / alcada_general,
+          superficie_arena = (amplada_arena / 2) * (alcada_arena / 2) * pi,
+          superficie_general = (amplada_general / 2) * (alcada_general / 2) * pi,
+          superficie_cavea = superficie_general - superficie_arena,
+          perimetre_arena = pi * (amplada_arena / 2 + alcada_arena / 2),
+          perimetre_general = pi * (amplada_general / 2 + alcada_general / 2),
+          ratio_cavea = superficie_arena / superficie_general) %>%
         dplyr::mutate(
           across(any_of(cols_num), as.double)) %>%
         dplyr::mutate(
@@ -173,7 +173,7 @@ if (!dir.exists(l_dir)) {
       if (!is.null(filtrar_edifici)) {
 
         l_df_ori[[i]] <- l_df_ori[[i]] %>%
-          dplyr::filter(.data$t_building %in% filtrar_edifici) %>%
+          dplyr::filter(t_building %in% filtrar_edifici) %>%
           droplevels()
 
       }
@@ -186,7 +186,7 @@ if (!dir.exists(l_dir)) {
         if (is.character(rlang::quo_get_expr(filter_expr))) {
 
           pattern <- paste(filtrar_provincia, collapse = '|')
-          filter_expr <- rlang::quo(stringr::str_detect(.data$provincia_romana, !!pattern))
+          filter_expr <- rlang::quo(stringr::str_detect(provincia_romana, !!pattern))
 
         }
 
@@ -204,7 +204,7 @@ if (!dir.exists(l_dir)) {
         if (is.character(rlang::quo_get_expr(filter_expr))) {
 
           pattern <- paste(filtrar_pais, collapse = '|')
-          filter_expr <- rlang::quo(stringr::str_detect(.data$pais, !!pattern))
+          filter_expr <- rlang::quo(stringr::str_detect(pais, !!pattern))
 
         }
 
@@ -218,7 +218,7 @@ if (!dir.exists(l_dir)) {
       if (!rlang::quo_is_null(seleccionar_columnes)) {
 
         l_df_ori[[i]] <- l_df_ori[[i]] %>%
-          dplyr::select(.data$index_id, .data$nom, .data$t_building, .data$provincia_romana, .data$pais, !!seleccionar_columnes)
+          dplyr::select(index_id, nom, t_building, provincia_romana, pais, !!seleccionar_columnes)
 
       }
   }
@@ -257,7 +257,7 @@ if (!dir.exists(l_dir)) {
 ### 'bind_rows' de la llista
   df_ori <- data.table::rbindlist(l_df_ori) %>%
     tibble::as_tibble() %>%
-    dplyr::arrange(.data$index_id, .data$nom, .data$provincia_romana, .data$pais)
+    dplyr::arrange(index_id, nom, provincia_romana, pais)
 
 ### missatge
   cat(

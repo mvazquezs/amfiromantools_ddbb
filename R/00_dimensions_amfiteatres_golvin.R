@@ -33,17 +33,20 @@
 #'
 #' # Carregar dades de Golvin filtrant per província
 #' df_golvin_hispania <- load_dimensions_golvin(
-#'   filtrar_provincia = 'hispania')
+#'   filtrar_provincia = 'hispania'
+#' )
 #'
 #' # Carregar dades de Golvin seleccionant columnes
 #' df_golvin_seleccionat <- load_dimensions_golvin(
 #'   filtrar_provincia = 'hispania',
-#'   seleccionar_columnes = c(nom, pais, amplada_general, alcada_general))
+#'   seleccionar_columnes = c(nom, pais, amplada_general, alcada_general)
+#' )
 #'
 #' # Carregar dades de Golvin en format llarg
 #' df_golvin_llarg <- load_dimensions_golvin(
 #'   seleccionar_columnes = c(amplada_arena, alcada_arena),
-#'   format_llarg = TRUE)
+#'   format_llarg = TRUE
+#' )
 #' }
 #'
 #' @rdname load_dimensions_golvin
@@ -610,14 +613,14 @@ columnes_golvin <- c(
   l_df_ori_88 <- purrr::map(l_tableau_ori, function(df) {
     df %>%
       dplyr::mutate(
-        ratio_arena = .data$amplada_arena / .data$alcada_arena,
-        ratio_general = .data$amplada_general / .data$alcada_general,
-        superficie_arena = .data$amplada_arena / 2 * .data$alcada_arena / 2 * pi,
-        superficie_general = .data$amplada_general / 2 * .data$alcada_general / 2 * pi,
-        superficie_cavea = .data$superficie_general - .data$superficie_arena,
-        perimetre_arena = pi * (.data$amplada_arena / 2 + .data$alcada_arena / 2),
-        perimetre_general = pi * (.data$amplada_general / 2 + .data$alcada_general / 2),
-        ratio_cavea = .data$superficie_arena / .data$superficie_general,
+        ratio_arena = amplada_arena / alcada_arena,
+        ratio_general = amplada_general / alcada_general,
+        superficie_arena = amplada_arena / 2 * alcada_arena / 2 * pi,
+        superficie_general = amplada_general / 2 * alcada_general / 2 * pi,
+        superficie_cavea = superficie_general - superficie_arena,
+        perimetre_arena = pi * (amplada_arena / 2 + alcada_arena / 2),
+        perimetre_general = pi * (amplada_general / 2 + alcada_general / 2),
+        ratio_cavea = superficie_arena / superficie_general,
         bib = '1988_golvin') %>%
       dplyr::mutate(
         across(any_of(cols_num), as.double)) %>%
@@ -633,7 +636,7 @@ columnes_golvin <- c(
 
         l_df_ori_88[[i]] <- l_df_ori_88[[i]] %>%
           dplyr::filter(
-            stringr::str_detect(.data$provincia_romana, paste(filtrar_provincia, collapse = '|'))) %>%
+            stringr::str_detect(provincia_romana, paste(filtrar_provincia, collapse = '|'))) %>%
             droplevels()
 
       }
@@ -643,7 +646,7 @@ columnes_golvin <- c(
 
         l_df_ori_88[[i]] <- l_df_ori_88[[i]] %>%
           dplyr::filter(
-            stringr::str_detect(.data$pais, paste(filtrar_pais, collapse = '|'))) %>%
+            stringr::str_detect(pais, paste(filtrar_pais, collapse = '|'))) %>%
             droplevels()
 
       }
@@ -652,7 +655,7 @@ columnes_golvin <- c(
         if(!rlang::quo_is_null(seleccionar_columnes)) {
 
           l_df_ori_88[[i]] <- l_df_ori_88[[i]] %>%
-            dplyr::select(.data$index_id, .data$nom, .data$provincia_romana, .data$pais, !!seleccionar_columnes)
+            dplyr::select(index_id, nom, provincia_romana, pais, !!seleccionar_columnes)
 
         }
     }
@@ -691,7 +694,7 @@ columnes_golvin <- c(
 ### Fusió de les dues taules per la columna 'nom' i 'original_id'
   df_ori_88 <- dplyr::bind_rows(l_df_ori_88) %>%
     tibble::as_tibble() %>%
-    dplyr::arrange(.data$index_id, .data$nom,  .data$provincia_romana, .data$pais)
+    dplyr::arrange(index_id, nom,  provincia_romana, pais)
 
 
 ### missatge

@@ -3,7 +3,6 @@
 export(amphi_list_files)
 export(amphi_load_packages)
 export(amphi_read_data)
-export(amphi_setup_dirs)
 export(amphidata_sticker)
 export(elipsoide_metrics)
 export(imputacio_estadistics)

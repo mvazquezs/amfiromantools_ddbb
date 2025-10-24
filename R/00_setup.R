@@ -1,31 +1,3 @@
-#' @title Configura els directoris i carrega els paquets del projecte
-#' @description Aquest script s'encarrega de la configuració inicial del projecte, 
-#' incloent la creació de directoris i la càrrega de paquets necessaris.
-
-# --- Configuració de Directoris ---
-
-#' @title Configura els directoris del projecte
-#' @description Aquesta funció comprova si existeixen els directoris clau del projecte i els crea si no existeixen.
-#' @param base_path La ruta base del projecte. Per defecte, el directori de treball actual.
-#' @param dirs_to_create Un vector de caràcters amb els noms dels directoris a crear.
-#' @return No retorna cap valor, però mostra un missatge per cada directori creat.
-#' @export
-#' @examples
-#' # Executar amb els directoris per defecte
-#' # amphi_setup_dirs()
-amphi_setup_dirs <- function(base_path = getwd(), dirs_to_create = c("data", "R", "output", "capitols")) {
-  
-  for (dir in dirs_to_create) {
-    dir_path <- file.path(base_path, dir)
-    if (!dir.exists(dir_path)) {
-      dir.create(dir_path, recursive = TRUE)
-      message(paste("Directori creat:", dir_path))
-    } else {
-      message(paste("El directori ja existeix:", dir_path))
-    }
-  }
-}
-
 # --- Càrrega de Paquets ---
 
 #' @title Carrega i instal·la els paquets necessaris
@@ -80,9 +52,9 @@ amphi_load_packages <- function(update_packages = FALSE) {
   options(width = getOption('width'))
 
   # missatge
-  cat(
+  message(
     crayon::bold(crayon::blue('i')),
-    crayon::black(' Els paquets han estat carregats correctament\n'))
+    crayon::black(' Els paquets han estat carregats correctament'))
 
 }
 
@@ -137,11 +109,17 @@ amphidata_sticker <- function(
   
   # ... (Omissió de la càrrega de fonts i dades de l'hexàgon per concisió)
   if (!("LM Roman" %in% font_families())) {
+    
     tryCatch({font_add(family = "LM Roman", regular = "lmroman10-regular.otf", bold = "lmroman10-bold.otf")}, error = function(e) {warning("LM Roman no s'ha trobat. Utilitzant alternativa de Google Fonts."); font_add_google("Crimson Text", "LM Roman", regular.wt = 400, bold.wt = 700)})
+  
   }
+  
   if (!("data_font" %in% font_families())) {
+    
     font_add_google("Dancing Script", "data_font") 
+  
   }
+  
   showtext_auto()
   
   hex_coords <- data.frame(
